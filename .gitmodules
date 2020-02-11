@@ -1,0 +1,6 @@
+[submodule "matrix"]
+	path = matrix
+	url = https://github.com/spantaleev/matrix-docker-ansible-deploy.git
+[submodule "initial-config"]
+	path = initial-config
+	url = https://github.com/do-community/ansible-playbooks.git
