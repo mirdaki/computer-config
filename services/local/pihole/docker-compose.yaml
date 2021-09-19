@@ -1,0 +1,63 @@
+version: "3"
+
+services:
+  pihole:
+    image: pihole/pihole:latest
+    container_name: pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    dns:
+      - 127.0.0.1
+      - 9.9.9.9
+    environment:
+      TZ: 'America/Los_Angeles'
+      WEBPASSWORD: 'PASSWORD'
+      PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
+      # DNS_BOGUS_PRIV: 'false'
+      DNSSEC: 'true'
+      ServerIP: 192.168.0.203 # Actual server IP. Matches DHCP conf file IP
+      VIRTUAL_HOST: pihole.local # Same as port traefik config
+      DNSMASQ_LISTENING: all
+      DHCP_ACTIVE: 'true'
+      DHCP_START: 192.168.0.100
+      DHCP_END: 192.168.0.199
+      DHCP_ROUTER: 192.168.0.1
+      DHCP_LEASETIME: 6
+      WEBTHEME: default-dark
+    volumes:
+      - '/services/pihole/pihole:/etc/pihole/'
+      - '/services/pihole/dnsmasq.d:/etc/dnsmasq.d/'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    networks: 
+      lan: {}
+      backend:
+        ipv4_address: '172.31.0.100'
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.local`)"
+      - "traefik.http.services.pihole.loadbalancer.server.port=80"
+      - "traefik.http.routers.pihole.entrypoints=web"
+    depends_on:
+      - dhcphelper
+
+  dhcphelper:
+    image: noamokman/dhcp-helper
+    container_name: dhcp-helper
+    restart: unless-stopped
+    network_mode: "host"
+    command: -s 172.31.0.100
+    cap_add:
+      - NET_ADMIN
+
+networks: 
+  backend:
+    ipam:
+      config:
+        - subnet: 172.31.0.0/16
+  lan:
+    external: true
