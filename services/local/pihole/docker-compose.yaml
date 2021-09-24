@@ -7,8 +7,6 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "80:80/tcp"
-      - "443:443/tcp"
     dns:
       - 127.0.0.1
       - 9.9.9.9
@@ -16,9 +14,8 @@ services:
       TZ: 'America/Los_Angeles'
       WEBPASSWORD: 'PASSWORD'
       PIHOLE_DNS_: 9.9.9.9;149.112.112.112;1.1.1.1
-      # DNS_BOGUS_PRIV: 'false'
       DNSSEC: 'true'
-      ServerIP: 192.168.0.203 # Actual server IP. Matches DHCP conf file IP
+      ServerIP: 192.168.0.204 # Actual server IP. Matches DHCP conf file IP
       VIRTUAL_HOST: pihole.local # Same as port traefik config
       DNSMASQ_LISTENING: all
       DHCP_ACTIVE: 'true'
@@ -27,6 +24,7 @@ services:
       DHCP_ROUTER: 192.168.0.1
       DHCP_LEASETIME: 6
       WEBTHEME: default-dark
+      PIHOLE_DOMAIN: lan
     volumes:
       - '/services/pihole/pihole:/etc/pihole/'
       - '/services/pihole/dnsmasq.d:/etc/dnsmasq.d/'
