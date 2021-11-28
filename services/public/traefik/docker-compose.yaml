@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: "traefik:v2.5"
+    container_name: "traefik"
+    command:
+      # - "--log.level=DEBUG"
+      # - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsEncrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsEncrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsEncrypt.acme.email={{ secret_traefik_ssl_email }}"
+      - "--certificatesresolvers.letsEncrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      # - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "~/services/traefik/letsencrypt:/letsencrypt"
+    networks: 
+      - lan
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.http.routers.api.rule=Host(`traefik.aka.tips`)"
+    #   - "traefik.http.routers.api.service=api@internal"
+    #   - "traefik.http.routers.api.entrypoints=web"
+
+networks: 
+  lan:
+    external: true

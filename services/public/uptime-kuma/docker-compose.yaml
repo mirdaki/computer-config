@@ -1,0 +1,25 @@
+version: '2.1'
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - ~/services/uptime-kuma/data:/app/data
+    networks: 
+      - lan
+    restart: unless-stopped
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.uptime-kuma-http.entrypoints=web"
+    - "traefik.http.routers.uptime-kuma-http.rule=Host(`status.codecaptured.com`)"
+    - "traefik.http.routers.uptime-kuma-http.middlewares=uptime-kuma"
+    - "traefik.http.middlewares.uptime-kuma.redirectscheme.scheme=https"
+    - "traefik.http.routers.uptime-kuma.entrypoints=websecure"
+    - "traefik.http.routers.uptime-kuma.rule=Host(`status.codecaptured.com`)"
+    - "traefik.http.routers.uptime-kuma.tls=true"
+    - "traefik.http.routers.uptime-kuma.tls.certresolver=letsEncrypt"
+    - "traefik.http.services.uptime-kuma.loadbalancer.server.port=3001"
+
+networks: 
+  lan:
+    external: true

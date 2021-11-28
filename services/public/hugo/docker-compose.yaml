@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  hugo-build:
+    build: ./hugo
+    container_name: "hugo-build"
+    volumes:
+      - ~/services/hugo/source:/source
+      - ~/services/hugo/output:/output
+    environment:
+      - HUGO_REFRESH_TIME=3600
+    restart: unless-stopped
+
+  hugo-nginx:
+    image: nginx
+    container_name: "hugo-nginx"
+    volumes:
+      - ~/services/hugo/output:/usr/share/nginx/html
+    networks: 
+      - lan
+    restart: unless-stopped
+    labels:
+    - "traefik.enable=true"
+    - "traefik.http.routers.hugo-nginx-http.entrypoints=web"
+    - "traefik.http.routers.hugo-nginx-http.rule=Host(`codecaptured.com`, `www.codecaptured.com`, `matthewbooe.com`)"
+    - "traefik.http.routers.hugo-nginx-http.middlewares=hugo-nginx"
+    - "traefik.http.middlewares.hugo-nginx.redirectscheme.scheme=https"
+    - "traefik.http.routers.hugo-nginx.entrypoints=websecure"
+    - "traefik.http.routers.hugo-nginx.rule=Host(`codecaptured.com`, `www.codecaptured.com`, `matthewbooe.com`)"
+    - "traefik.http.routers.hugo-nginx.tls=true"
+    - "traefik.http.routers.hugo-nginx.tls.certresolver=letsEncrypt"
+
+networks: 
+  lan:
+    external: true
