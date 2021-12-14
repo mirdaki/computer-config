@@ -15,7 +15,8 @@ services:
     image: nginx
     container_name: "hugo-nginx"
     volumes:
-      - ~/services/hugo/output:/usr/share/nginx/html
+      - ~/services/hugo/output:/var/www/codecaptured.com/public
+      - ~/services/hugo/nginx/codecaptured.com.conf:/etc/nginx/conf.d/codecaptured.com.conf
     networks: 
       - lan
     restart: unless-stopped
