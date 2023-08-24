@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Discord
+StartupWMClass=discord
+Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+GenericName=Internet Messenger
+Exec=/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=discord com.discordapp.Discord
+Icon=com.discordapp.Discord
+Type=Application
+Categories=Network;InstantMessaging;
+Path=/usr/bin
+X-Flatpak-Tags=proprietary;
+X-Flatpak=com.discordapp.Discord

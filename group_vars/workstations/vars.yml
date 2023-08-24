@@ -1,0 +1,11 @@
+---
+git_enabled: true
+git_user: "{{ secret_git_user }}"
+git_editor: nano
+git_email: "{{ secret_git_email }}"
+
+gnome_enabled: true
+
+flatpak_enabled: true
+
+shell_enabled: true

@@ -1,0 +1,7 @@
+---
+
+- name: Configure desktops and laptops
+  hosts: localhost
+  remote_user: matthew
+  roles:
+    - workstation

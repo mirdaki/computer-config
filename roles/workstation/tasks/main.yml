@@ -1,0 +1,29 @@
+---
+
+- block:
+    - when: shell_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/shell.yml"
+  tags:
+    - setup-all
+    - setup-shell
+
+- block:
+    - when: git_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/git.yml"
+  tags:
+    - setup-all
+    - setup-git
+
+- block:
+    - when: flatpak_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/flatpak.yml"
+  tags:
+    - setup-all
+    - setup-flatpak
+
+- block:
+    - when: gnome_enabled | bool
+      ansible.builtin.include_tasks: "{{ role_path }}/tasks/gnome.yml"
+  tags:
+    - setup-all
+    - setup-gnome

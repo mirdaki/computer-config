@@ -1,0 +1,21 @@
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Install standard packages from flathub for current user
+  community.general.flatpak:
+    state: present
+    method: user
+    remote: flathub
+    name:
+      - org.gimp.GIMP
+      - org.inkscape.Inkscape
+      - org.mozilla.firefox
+      - com.valvesoftware.Steam
+      - com.discordapp.Discord
+      - im.riot.Riot
+      - org.darktable.Darktable
+      - com.nextcloud.desktopclient.nextcloud

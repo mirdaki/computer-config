@@ -18,23 +18,52 @@ and to update from repo:
 git submodule update
 ```
 
-or if updating form upstream 
+or if updating form upstream:
 
 ```bash
 git submodule update --remote <path>
 ```
 
+### Software
+
+Install ansible:
+
+```bash
+sudo dnf install ansible
+```
+
+Get and setup [Bitwarden CLI](https://bitwarden.com/help/cli/#download-and-install):
+
+```bash
+export PATH="/bw:$PATH"
+export BW_SESSION=$(bw unlock --raw)
+```
+
 ### Files to modify
 
-- Initial Config
-	- initial-config/setup_ubuntu1804/vars/default.yml
+- Workstation
+  - group_vars/workstations/vars.yml
 - Matrix
 	- [matrix/inventory/hosts](./matrix/inventory/hosts)
 	- inventory/host_vars/matrix.*/vars.yml
-	<!-- - [inventory/host_vars/matrix.*/vars.yml](./inventory/host_vars/matrix.*/vars.yml) -->
 
 ### Run
- 
+
+Setup workstation (may need to manually run to get just):
+
+```bash
+just update
+just workstations
+```
+
+To toggle encryption:
+
+```bash
+just decrypt
+just encrypt
+```
+
+### Old, to be updated
 - Setup Ubuntu 18.04
 	- `ansible-playbook -l coruscant -i initial-config/hosts -u root initial-config/setup_ubuntu1804/playbook.yml`
 		- May need to change user on subsequent runs
@@ -60,15 +89,10 @@ git submodule update --remote <path>
 
 - If a container fails to run properly on `start`, try restarting docker `sudo systemctl restart docker` and running the command again
 
-## TODO
-
-- Consider using custom original config
-- Find way to share hosts
-- Find way to not store secrets in git
-- Add Docker group and add default user to Docker group (check for Ansible modules)
-	- https://docs.docker.com/engine/install/linux-postinstall/
 
 ## Resources
 
-- [Initial Config](https://github.com/do-community/ansible-playbooks)
 - [Matrix](https://github.com/spantaleev/matrix-docker-ansible-deploy)
+- Vault
+  - [Setup](https://blog.ktz.me/secret-management-with-docker-compose-and-ansible/)
+  - [Bitwarden integration](https://theorangeone.net/posts/ansible-vault-bitwarden/)
