@@ -87,7 +87,7 @@
 - name: System monitor shortcut binding
   community.general.dconf:
     key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding"
-    value: "'<Control><Shift>Escape'"
+    value: "'<Shift><Control>Escape'"
     state: present
 
 - name: System monitor shortcut command
