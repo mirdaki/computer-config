@@ -14,7 +14,7 @@
 - name: Set Startup applications
   ansible.builtin.file:
     state: link
-    force: yes
+    force: true
     src: "{{ ansible_env.PWD }}/roles/workstation/files/gnome/{{ item }}"
     dest: ~/.config/autostart/{{ item }}
   with_items:

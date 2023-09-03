@@ -1,2 +1,10 @@
 [workstations]
 localhost ansible_connection=local
+
+[mash_servers]
+[mash_servers:children]
+mash_local_servers
+
+[mash_local_servers]
+alderaan ansible_user=matthew become=true become_user=root
+alderaan-nextcloud-deps ansible_user=matthew become=true become_user=root

@@ -52,6 +52,7 @@ export BW_SESSION=$(bw unlock --raw)
 Setup workstation (may need to manually run to get just):
 
 ```bash
+just initialize-host
 just update
 just workstations
 ```

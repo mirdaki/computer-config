@@ -1,8 +1,8 @@
 ---
 git_enabled: true
-git_user: "{{ secret_git_user }}"
+git_user: " {{secret_git_user}} "
 git_editor: nano
-git_email: "{{ secret_git_email }}"
+git_email: " {{secret_git_email}} "
 
 gnome_enabled: true
 
