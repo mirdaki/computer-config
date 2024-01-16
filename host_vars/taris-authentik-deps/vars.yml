@@ -1,0 +1,15 @@
+---
+
+ansible_ssh_host: "{{ secret_taris_host }}"
+
+# mash playbook
+
+mash_playbook_generic_secret_key: "{{ secret_mash_playbook_generic_secret_key }}"
+
+# Override service names and directory path prefixes
+mash_playbook_service_identifier_prefix: 'mash-authentik-'
+mash_playbook_service_base_directory_name_prefix: 'authentik-'
+
+# redis
+
+redis_enabled: true

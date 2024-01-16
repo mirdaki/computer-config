@@ -1,4 +1,9 @@
 ---
 
+roles:
+  - src: git+https://github.com/hifis-net/ansible-role-unattended-upgrades.git
+    version: v3.2.1
+    name: hifis.unattended_upgrades
+
 collections:
   - name: community.general

@@ -2,3 +2,45 @@
 
 ansible_ssh_host: "{{ secret_taris_host }}"
 local_hostname: "{{ secret_local_hostname }}"
+
+# mash playbook
+
+mash_playbook_generic_secret_key: "{{secret_mash_playbook_generic_secret_key}}"
+
+# docker
+
+mash_playbook_docker_installation_enabled: true
+devture_docker_sdk_for_python_installation_enabled: true
+
+# com.devture.ansible.role.timesync
+
+devture_timesync_installation_enabled: true
+
+# com.devture.ansible.role.traefik
+
+mash_playbook_reverse_proxy_type: playbook-managed-traefik
+devture_traefik_config_certificatesResolvers_acme_email: "{{ secret_lets_encrypt_email }}"
+
+# com.devture.ansible.role.postgres
+
+devture_postgres_enabled: true
+devture_postgres_connection_password: "{{ secret_devture_postgres_connection_password }}"
+
+# exim_relay
+
+exim_relay_enabled: true
+exim_relay_hostname: "{{ secret_exim_relay_hostname }}"
+exim_relay_sender_address: "{{ secret_exim_relay_sender_address }}@{{ exim_relay_hostname }}"
+
+# authentik
+
+authentik_enabled: true
+authentik_hostname: "{{ secret_authentik_hostname }}"
+authentik_secret_key: "{{ secret_authentik_secret_key }}"
+
+# Using a dedicated Redis instance for authentik
+authentik_config_redis_hostname: mash-authentik-redis
+authentik_systemd_required_services_list_custom:
+  - "mash-authentik-redis.service"
+authentik_container_additional_networks_custom:
+  - "mash-authentik-redis"
