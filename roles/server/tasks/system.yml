@@ -1,0 +1,13 @@
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: '{{ ansible_host }}'
+
+- name: Set timezone to Pacific Time
+  community.general.timezone:
+    name: America/Los_Angeles
+
+# TODO: Fix bug where this package can't be found, even in installed
+# - name: Setup unattended upgrades
+#   hifis.unattended_upgrades:
+#     unattended_origins_patterns:
+#     - 'origin=Debian,codename=${distro_codename},label=Debian-Security'

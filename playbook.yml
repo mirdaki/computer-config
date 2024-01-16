@@ -5,3 +5,8 @@
   remote_user: matthew
   roles:
     - workstation
+
+- name: Configure servers
+  hosts: servers
+  roles:
+    - server
