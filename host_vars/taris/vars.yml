@@ -1,0 +1,4 @@
+---
+
+ansible_ssh_host: "{{ secret_taris_host }}"
+local_hostname: "{{ secret_local_hostname }}"

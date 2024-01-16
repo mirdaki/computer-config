@@ -1,0 +1,6 @@
+- name: Install standard shell related packages. Used by other tasks
+  become: true
+  ansible.builtin.package:
+    name:
+      - sudo
+    state: present

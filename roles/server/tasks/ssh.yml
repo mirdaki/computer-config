@@ -1,0 +1,28 @@
+- name: Enable Key Authentication
+  ansible.builtin.lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PubkeyAuthentication'
+    line="PubkeyAuthentication yes"
+    state=present
+    backup=yes
+
+- name: Disable Password Authentication
+  ansible.builtin.lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PasswordAuthentication'
+    line="PasswordAuthentication no"
+    state=present
+    backup=yes
+
+- name: Disable Root Login
+  ansible.builtin.lineinfile:
+    dest=/etc/ssh/sshd_config
+    regexp='^PermitRootLogin'
+    line="PermitRootLogin no"
+    state=present
+    backup=yes
+
+- name: Restart ssh
+  ansible.builtin.service:
+    name: ssh
+    state: restarted

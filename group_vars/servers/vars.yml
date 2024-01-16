@@ -1,0 +1,18 @@
+---
+shell_enabled: true
+
+user_enabled: true
+
+system_enabled: true
+unattended_systemd_timer_override: true
+# Download
+unattended_apt_daily_oncalendar: "*-*-* 00:30"
+unattended_apt_daily_randomizeddelaysec: "5m"
+# Install
+unattended_apt_daily_upgrade_oncalendar: "*-*-* 2:00"
+unattended_apt_daily_upgrade_randomizeddelaysec: "5m"
+
+
+ssh_enabled: true
+
+reboot_enabled: true
