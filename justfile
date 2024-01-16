@@ -24,11 +24,15 @@ mash_local_servers:
   (cd mash-playbook; ansible-playbook -i ../hosts setup.yml --ask-pass --ask-become-pass --tags=setup-all,start --extra-vars @../host_vars/alderaan-nextcloud-deps/vars.yml --extra-vars @../host_vars/alderaan-nextcloud-deps/vault.yml --extra-vars target=alderaan-nextcloud-deps)
   (cd mash-playbook; ansible-playbook -i ../hosts setup.yml --ask-pass --ask-become-pass --tags=setup-all,start --extra-vars @../host_vars/alderaan/vars.yml --extra-vars @../host_vars/alderaan/vault.yml --extra-vars target=alderaan)
 
+mash_remote_servers:
+  (cd mash-playbook; ansible-playbook -i ../hosts setup.yml --tags=setup-all,start --extra-vars @../host_vars/taris-authentik-deps/vars.yml --extra-vars @../host_vars/taris-authentik-deps/vault.yml --extra-vars target=taris-authentik-deps)
+  (cd mash-playbook; ansible-playbook -i ../hosts setup.yml --tags=setup-all,start --extra-vars @../host_vars/taris/vars.yml --extra-vars @../host_vars/taris/vault.yml --extra-vars target=taris)
 
 encrypt:
   ansible-vault encrypt group_vars/workstations/vault.yml
   ansible-vault encrypt group_vars/servers/vault.yml
   ansible-vault encrypt host_vars/taris/vault.yml
+  ansible-vault encrypt host_vars/taris-authentik-deps/vault.yml
   ansible-vault encrypt host_vars/alderaan/vault.yml
   ansible-vault encrypt host_vars/alderaan-nextcloud-deps/vault.yml
 
@@ -36,5 +40,6 @@ decrypt:
   ansible-vault decrypt group_vars/workstations/vault.yml
   ansible-vault decrypt group_vars/servers/vault.yml
   ansible-vault decrypt host_vars/taris/vault.yml
+  ansible-vault decrypt host_vars/taris-authentik-deps/vault.yml
   ansible-vault decrypt host_vars/alderaan/vault.yml
   ansible-vault decrypt host_vars/alderaan-nextcloud-deps/vault.yml
