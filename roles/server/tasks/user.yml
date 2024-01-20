@@ -1,6 +1,7 @@
 - name: Create user
   ansible.builtin.user:
     name: matthew
+    shell: /bin/bash
 
 - name: Make sure we have a 'wheel' group
   ansible.builtin.group:

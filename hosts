@@ -2,7 +2,7 @@
 localhost ansible_connection=local
 
 [servers]
-taris ansible_user=root
+taris ansible_user=root become=true
 
 [mash_servers]
 [mash_servers:children]
