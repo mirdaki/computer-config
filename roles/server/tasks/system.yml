@@ -1,6 +1,6 @@
 - name: Set a hostname
   ansible.builtin.hostname:
-    name: '{{ ansible_host }}'
+    name: '{{ inventory_hostname }}'
 
 - name: Set timezone to Pacific Time
   community.general.timezone:

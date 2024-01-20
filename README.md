@@ -64,6 +64,10 @@ just decrypt
 just encrypt
 ```
 
+#### Note
+
+If you are running anything with a separate "-service-dep", you may need to run a base install, with just the MASH core things (traefik, docker, etc) first to get the dependencies needed for the "-service-dep" to work. After that, enable everything and have the "-service-dep" run first.
+
 ### Old, to be updated
 - Setup Ubuntu 18.04
 	- `ansible-playbook -l coruscant -i initial-config/hosts -u root initial-config/setup_ubuntu1804/playbook.yml`
