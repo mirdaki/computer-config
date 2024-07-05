@@ -1,7 +1,0 @@
-- name: Install standard shell related packages
-  become: true
-  ansible.builtin.package:
-    name:
-      - just
-      - python3-psutil # For the dconf task
-    state: present

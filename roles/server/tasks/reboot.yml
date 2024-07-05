@@ -1,3 +1,0 @@
-# Not using the reboot module, as it tries to reestablish a connection, which won't work now that there is no root ssh login
-- name: Reboot the machine
-  ansible.builtin.shell: systemctl reboot

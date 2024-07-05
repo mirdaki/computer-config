@@ -1,3 +1,17 @@
+# Computer Config
+
+rebuilding with flakes enabled
+sudo nixos-rebuild switch --flake /etc/nixos/#default
+
+sudo nixos-rebuild switch --flake ~/computer-config/
+
+
+
+How to use experimantal features (nix command and flakes) in CLI ad hoc
+[matthew@nixos:~/computer-config]$ nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- init &&   sudo cp ~/.config/home-manager/home.nix /etc/nixos/
+
+
+
 # Server Configuration
 
 Some Ansible scripts to automate setting up, installing, and updating a server to my preferences. 
