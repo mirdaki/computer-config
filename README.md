@@ -1,88 +1,22 @@
 # Computer Config
 
-rebuilding with flakes enabled
-sudo nixos-rebuild switch --flake /etc/nixos/#default
+## NixOS Configuration
 
-sudo nixos-rebuild switch --flake ~/computer-config/
-
-
-
-How to use experimantal features (nix command and flakes) in CLI ad hoc
-[matthew@nixos:~/computer-config]$ nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- init &&   sudo cp ~/.config/home-manager/home.nix /etc/nixos/
-
-
-
-# Server Configuration
-
-Some Ansible scripts to automate setting up, installing, and updating a server to my preferences. 
-
-## Setup
-
-### Git Stuff
-
-The repo makes use of git submodule, to clone:
+To update the computer, run the below with the right profile (`#corellia` below):
 
 ```bash
-git clone --recursive https://github.com/mirdaki/server-config.git
+sudo nixos-rebuild switch --flake /home/matthew/computer-config/test#corellia
 ```
 
-and to update from repo:
+### First Time Setup
+
+This may not be needed going forward, but I did need this to use experimental features (nix command and flakes) in CLI ad hoc
 
 ```bash
-git submodule update
+nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- init
 ```
 
-or if updating form upstream:
-
-```bash
-git submodule update --remote <path>
-```
-
-### Software
-
-Install ansible:
-
-```bash
-sudo dnf install ansible
-```
-
-Get and setup [Bitwarden CLI](https://bitwarden.com/help/cli/#download-and-install):
-
-```bash
-export PATH="/bw:$PATH"
-export BW_SESSION=$(bw unlock --raw)
-```
-
-### Files to modify
-
-- Workstation
-  - group_vars/workstations/vars.yml
-- Matrix
-	- [matrix/inventory/hosts](./matrix/inventory/hosts)
-	- inventory/host_vars/matrix.*/vars.yml
-
-### Run
-
-Setup workstation (may need to manually run to get just):
-
-```bash
-just initialize-host
-just update
-just workstations
-```
-
-To toggle encryption:
-
-```bash
-just decrypt
-just encrypt
-```
-
-#### Note
-
-If you are running anything with a separate "-service-dep", you may need to run a base install, with just the MASH core things (traefik, docker, etc) first to get the dependencies needed for the "-service-dep" to work. After that, enable everything and have the "-service-dep" run first.
-
-### Old, to be updated
+## Old Manual Docker, to be updated
 - Setup Ubuntu 18.04
 	- `ansible-playbook -l coruscant -i initial-config/hosts -u root initial-config/setup_ubuntu1804/playbook.yml`
 		- May need to change user on subsequent runs
@@ -108,10 +42,6 @@ If you are running anything with a separate "-service-dep", you may need to run 
 
 - If a container fails to run properly on `start`, try restarting docker `sudo systemctl restart docker` and running the command again
 
-
 ## Resources
 
 - [Matrix](https://github.com/spantaleev/matrix-docker-ansible-deploy)
-- Vault
-  - [Setup](https://blog.ktz.me/secret-management-with-docker-compose-and-ansible/)
-  - [Bitwarden integration](https://theorangeone.net/posts/ansible-vault-bitwarden/)

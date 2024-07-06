@@ -1,0 +1,9 @@
+{
+    "nix.serverSettings": {
+      "nil": {
+        "formatting": {
+          "command": ["nixpkgs-fmt"]
+        }
+      }
+    }
+  }
