@@ -11,6 +11,8 @@
   # My changes
   services.fwupd.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  programs.bash.enableCompletion = true;
+  virtualisation.docker.enable = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -72,9 +74,12 @@
     isNormalUser = true;
     description = "matthew";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.bash;
+    openssh.authorizedKeys.keyFiles = [
+      "../../modules/nixos/ssh-keys/mandalore/id_rsa.pub"
+      "../../modules/nixos/ssh-keys/corellia/id_rsa.pub"
+    ];
   };
-
-  virtualisation.docker.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
