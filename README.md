@@ -10,10 +10,37 @@ sudo nixos-rebuild switch --flake /home/matthew/computer-config/test#corellia
 
 ### First Time Setup
 
-This may not be needed going forward, but I did need this to use experimental features (nix command and flakes) in CLI ad hoc
+This may not be needed going forward, but I did need this to use experimental features (nix command and flakes) in CLI ad hoc:
 
 ```bash
+nix-shell -p git 
+git clone https://github.com/mirdaki/computer-config.git
+
 nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- init
+```
+
+And if you need to create age keys for secrets:
+```bash
+nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
+# or to get the public key if it already exists
+nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
+```
+
+[Setting up a user password with sops-nix](https://github.com/Mic92/sops-nix?tab=readme-ov-file#setting-a-users-password)
+
+### Updaing Secrets
+
+```bash
+cd hosts/alderaan/
+nix-shell -p sops --run "sops secrets/secret.yaml"
+```
+
+#### Nextcloud
+
+For some reason, despite trying multiple examples, the inital admin password I set never allowed logging in to the Nextcloud web UI. I can change it via the occ CLI tool and succsesfully login.
+
+```bash
+nextcloud-occ user:resetpassword root
 ```
 
 ## Old Manual Docker, to be updated
