@@ -41,6 +41,19 @@
         ];
       };
 
+      taris = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/taris/configuration.nix
+          sops-nix.nixosModules.sops
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.matthew = import ./hosts/taris/home.nix;
+          }
+        ];
+      };
     };
   };
 }

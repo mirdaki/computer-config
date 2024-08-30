@@ -1,13 +1,22 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
+let
+  cfg = config.git;
+in
 {
-  programs.git = {
-    enable = true;
-    userName = "Matthew Booe";
-    userEmail = "mirdaki@users.noreply.github.com";
-    extraConfig = {
-      push = {
-        autoSetupRemote = true;
+  options = {
+    git.enable = lib.mkEnableOption "enable git module";
+  };
+
+  config = lib.mkIf cfg.enable {
+    programs.git = {
+      enable = true;
+      userName = "mirdaki";
+      userEmail = "mirdaki@users.noreply.github.com";
+      extraConfig = {
+        push = {
+          autoSetupRemote = true;
+        };
       };
     };
   };
