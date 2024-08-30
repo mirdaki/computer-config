@@ -16,6 +16,9 @@
     "flakes"
   ];
 
+  networking.hostName = "taris";
+  time.timeZone = "America/Los_Angeles";
+
   sops.defaultSopsFile = ./secrets/secret.yaml;
   sops.age.keyFile = "/home/matthew/.config/sops/age/keys.txt";
 
@@ -34,14 +37,18 @@
 
   vscode-remote-ssh.enable = true;
 
-  linode.enable = true;
-
   programs.bash.enableCompletion = true;
 
-  networking.hostName = "taris";
+  linode.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
+  #  Services
+  acme.enable = true;
+  acme.email = "contact+letsencrypt.org@boowho.me";
+
+  nginx-recommended.enable = true;
+
+  uptime-kuma.enable = true;
+  uptime-kuma.domainName = "external.status.codecaptured.com";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
