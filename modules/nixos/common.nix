@@ -5,6 +5,7 @@
     ./acme.nix
     ./firewall.nix
     ./linode.nix
+    ./lldap.nix
     ./nextcloud.nix
     ./nginx-recommended.nix
     ./postgresql.nix

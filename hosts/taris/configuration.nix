@@ -47,8 +47,21 @@
 
   nginx-recommended.enable = true;
 
+  postgresql.enable = true;
+
   uptime-kuma.enable = true;
   uptime-kuma.domainName = "external.status.codecaptured.com";
+
+  lldap.enable = true;
+  lldap.domainName = "ldap.codecaptured.com";
+  lldap.httpUrl = "https://ldap.codecaptured.com";
+  lldap.ldapBaseDN = "dc=codecaptured,dc=com";
+  sops.secrets."lldap/jwt-secret".owner = "lldap";
+  lldap.jwtSecretFile = config.sops.secrets."lldap/jwt-secret".path;
+  sops.secrets."lldap/ldap-user-pass".owner = "lldap";
+  lldap.ldapUserPassFile = config.sops.secrets."lldap/ldap-user-pass".path;
+  sops.secrets."lldap/key-seed".owner = "lldap";
+  lldap.keySeedFile = config.sops.secrets."lldap/key-seed".path;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
