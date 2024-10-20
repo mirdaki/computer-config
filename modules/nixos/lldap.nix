@@ -1,5 +1,3 @@
-# TODO: Add smtp and ldap_user_email
-
 {
   config,
   lib,

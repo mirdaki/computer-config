@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +12,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixos-hardware, sops-nix, ... }: {
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, sops-nix, ... }: {
     nixosConfigurations = {
       corellia = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -41,8 +42,15 @@
         ];
       };
 
-      taris = nixpkgs.lib.nixosSystem {
+      taris = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
+        specialArgs = {
+          pkgs-unstable = import nixpkgs-unstable {
+            # Refer to the `system` parameter from
+            # the outer scope recursively
+            inherit system;
+          };
+        };
         modules = [
           ./hosts/taris/configuration.nix
           sops-nix.nixosModules.sops

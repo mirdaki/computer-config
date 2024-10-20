@@ -41,7 +41,7 @@
 
   linode.enable = true;
 
-  #  Services
+  # Services
   acme.enable = true;
   acme.email = "contact+letsencrypt.org@boowho.me";
 
@@ -49,8 +49,8 @@
 
   postgresql.enable = true;
 
-  uptime-kuma.enable = true;
-  uptime-kuma.domainName = "external.status.codecaptured.com";
+  uptime-kuma.enable = false;
+  uptime-kuma.domainName = "status.codecaptured.com";
 
   lldap.enable = true;
   lldap.domainName = "ldap.codecaptured.com";
@@ -62,6 +62,34 @@
   lldap.ldapUserPassFile = config.sops.secrets."lldap/ldap-user-pass".path;
   sops.secrets."lldap/key-seed".owner = "lldap";
   lldap.keySeedFile = config.sops.secrets."lldap/key-seed".path;
+
+  authelia.enable = true;
+  authelia.subDomainName = "auth";
+  authelia.baseDomainName = "codecaptured.com";
+  authelia.ldapBaseDN = "dc=codecaptured,dc=com";
+  authelia.smtpUsername = "codecaptured@gmail.com";
+
+  sops.secrets."authelia/jwt-secret".owner = "authelia-main";
+  authelia.jwtSecretFile = config.sops.secrets."authelia/jwt-secret".path;
+  sops.secrets."authelia/lldap-password".owner = "authelia-main";
+  authelia.lldapPasswordFile = config.sops.secrets."authelia/lldap-password".path;
+  sops.secrets."authelia/oidc-hmac-secret".owner = "authelia-main";
+  authelia.oidcHmacSecretFile = config.sops.secrets."authelia/oidc-hmac-secret".path;
+  sops.secrets.authelia-oidc-issuer-private-key = {
+    sopsFile = ./secrets/oidc-issuer-private-key.pem;
+    format = "binary";
+  };
+  sops.secrets."authelia-oidc-issuer-private-key".owner = "authelia-main";
+  authelia.oidcIssuerPrivateKeyFile = config.sops.secrets."authelia-oidc-issuer-private-key".path;
+  sops.secrets."authelia/session-secret".owner = "authelia-main";
+  authelia.sessionSecretFile = config.sops.secrets."authelia/session-secret".path;
+  sops.secrets."authelia/storage-encryption-key".owner = "authelia-main";
+  authelia.storageEncryptionKeyFile = config.sops.secrets."authelia/storage-encryption-key".path;
+  sops.secrets."authelia/smtp-password".owner = "authelia-main";
+  authelia.smtpPasswordFile = config.sops.secrets."authelia/smtp-password".path;
+
+  ntfy.enable = true;
+  ntfy.domainName = "notify.codecaptured.com";
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

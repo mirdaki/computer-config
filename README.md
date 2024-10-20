@@ -32,15 +32,23 @@ nix shell nixpkgs#age -c age-keygen -y ~/.config/sops/age/keys.txt
 
 ### Updating Secrets
 
+Regular secrets
 ```bash
-cd hosts/alderaan/
-nix-shell -p sops --run "sops secrets/secret.yaml"
+nix-shell -p sops --run "sops hosts/alderaan/secrets/secret.yaml"
 ```
 
-#### Nextcloud
-
-For some reason, despite trying multiple examples, the initial admin password I set never allowed logging in to the Nextcloud web UI. I can change it via the occ CLI tool and successfully login.
-
+Binary files. With separate encrypt and decrypt stages
 ```bash
-nextcloud-occ user:resetpassword root
+nix-shell -p sops --run "sops -e /etc/krb5/krb5.keytab > krb5.keytab"
+nix-shell -p sops --run "sops -d krb5.keytab > /tmp/krb5.keytab"
+```
+
+### Cleaning Tables
+
+If you want to drop a table (for instances, to remove testing data)
+```bash
+sudo -u postgres psql
+\l
+DROP DATABASE <name>;
+\q
 ```

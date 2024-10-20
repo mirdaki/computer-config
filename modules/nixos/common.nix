@@ -3,11 +3,14 @@
 {
   imports = [
     ./acme.nix
+    ./authelia-nginx.nix
+    ./authelia.nix
     ./firewall.nix
     ./linode.nix
     ./lldap.nix
     ./nextcloud.nix
     ./nginx-recommended.nix
+    ./ntfy.nix
     ./postgresql.nix
     ./security.nix
     ./ssh.nix

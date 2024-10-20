@@ -1,3 +1,6 @@
+# For some reason, despite trying multiple examples, the initial admin password I set never allowed logging in to the Nextcloud web UI. I can change it via the occ CLI tool and successfully login.
+# nextcloud-occ user:resetpassword root
+
 {
   lib,
   config,
