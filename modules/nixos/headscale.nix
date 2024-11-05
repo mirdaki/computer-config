@@ -50,7 +50,7 @@ in
           };
           oidc = {
             issuer = "https://auth.${cfg.baseDomainName}";
-            client_id = "headscale-id-to-change";
+            client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
             client_secret_path = cfg.oidcSecretFile;
             strip_email_domain = true;
           };
@@ -64,7 +64,7 @@ in
 
       authelia.instances.main.settings.identity_providers.oidc.clients = [
         {
-          id = "headscale-id-to-change";
+          id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
           description = "headscale";
           secret = "$pbkdf2-sha512$310000$Lk0.Ywno0TRsAcKgXwtMkA$qbtvBbeuLXIoWlC82nU9aGL.fKMhUpJd5l2/n4lRHWcp1pvBks/Zw2HsxOzlV5lTTnRzszclo0Y54GQvyyHtDw";
           authorization_policy = "one_factor";
