@@ -16,6 +16,8 @@
     "flakes"
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   networking.hostName = "taris";
   time.timeZone = "America/Los_Angeles";
 
@@ -56,6 +58,7 @@
   lldap.domainName = "ldap.codecaptured.com";
   lldap.httpUrl = "https://ldap.codecaptured.com";
   lldap.ldapBaseDN = "dc=codecaptured,dc=com";
+
   sops.secrets."lldap/jwt-secret".owner = "lldap";
   lldap.jwtSecretFile = config.sops.secrets."lldap/jwt-secret".path;
   sops.secrets."lldap/ldap-user-pass".owner = "lldap";
@@ -91,8 +94,12 @@
   ntfy.enable = true;
   ntfy.domainName = "notify.codecaptured.com";
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  headscale.enable = true;
+  headscale.subDomainName = "net";
+  headscale.baseDomainName = "codecaptured.com";
+
+  sops.secrets."headscale/oidc-secret".owner = "headscale";
+  headscale.oidcSecretFile = config.sops.secrets."headscale/oidc-secret".path;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

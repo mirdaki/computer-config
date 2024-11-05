@@ -130,8 +130,8 @@ in
 
         secrets = {
           jwtSecretFile = cfg.jwtSecretFile;
-          # oidcHmacSecretFile = cfg.oidcHmacSecretFile;
-          # oidcIssuerPrivateKeyFile = cfg.oidcIssuerPrivateKeyFile;
+          oidcHmacSecretFile = cfg.oidcHmacSecretFile;
+          oidcIssuerPrivateKeyFile = cfg.oidcIssuerPrivateKeyFile;
           sessionSecretFile = cfg.sessionSecretFile;
           storageEncryptionKeyFile = cfg.storageEncryptionKeyFile;
         };

@@ -6,6 +6,7 @@
     ./authelia-nginx.nix
     ./authelia.nix
     ./firewall.nix
+    ./headscale.nix
     ./linode.nix
     ./lldap.nix
     ./nextcloud.nix
