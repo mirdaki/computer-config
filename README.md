@@ -52,3 +52,9 @@ sudo -u postgres psql
 DROP DATABASE <name>;
 \q
 ```
+
+### Manually Cleaning NixOS
+
+```bash
+sudo nix-collect-garbage -d
+```

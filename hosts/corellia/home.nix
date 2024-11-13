@@ -3,7 +3,11 @@
 {
   imports = [ ../../modules/home-manager/common.nix ];
 
+  # Let Home Manager install and manage itself.
+  programs.home-manager.enable = true;
+
   gnome.enable = true;
+  gnome-extensions.enable = true;
 
   git.enable = true;
 
@@ -29,14 +33,19 @@
     startInBackground = true;
   };
 
+  # Workaround for nextcloud not starting up properly
+  # https://discourse.nixos.org/t/nextcloud-client-does-not-auto-start-in-gnome3/46492/7
+  systemd.user.services.nextcloud-client = {
+    Unit = {
+      After = pkgs.lib.mkForce "graphical-session.target";
+    };
+  };
+
   programs = {
     firefox = {
       enable = true;
     };
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
