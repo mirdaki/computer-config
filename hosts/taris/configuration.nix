@@ -101,6 +101,16 @@
   sops.secrets."headscale/oidc-secret".owner = "headscale";
   headscale.oidcSecretFile = config.sops.secrets."headscale/oidc-secret".path;
 
+  tailscale.enable = true;
+  tailscale.domainName = "net.codecaptured.com";
+
+  sops.secrets."tailscale/auth-key".owner = "tailscale";
+  tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+
+  foundryvtt-router.enable = false;
+  foundryvtt-router.domainName = "vtt.codecaptured.com";
+  foundryvtt-router.proxyPass = "mandalore.contact-taris-testuser.codecaptured.com:30000";
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
