@@ -5,6 +5,10 @@
   ...
 }:
 
+let
+  primaryUser = "matthew";
+  baseDomainName = "codecaptured.com";
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -22,16 +26,16 @@
   time.timeZone = "America/Los_Angeles";
 
   sops.defaultSopsFile = ./secrets/secret.yaml;
-  sops.age.keyFile = "/home/matthew/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
 
   user.enable = true;
-  user.name = "matthew";
+  user.name = primaryUser;
   sops.secrets."user/hashed-password" = { };
   user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   sops.secrets."user/hashed-password".neededForUsers = true;
 
   ssh.enable = true;
-  ssh.allowUsername = "matthew";
+  ssh.allowUsername = primaryUser;
 
   security.enable = true;
 
@@ -52,11 +56,11 @@
   postgresql.enable = true;
 
   uptime-kuma.enable = false;
-  uptime-kuma.domainName = "status.codecaptured.com";
+  uptime-kuma.domainName = "status.${baseDomainName}";
 
   lldap.enable = true;
-  lldap.domainName = "ldap.codecaptured.com";
-  lldap.httpUrl = "https://ldap.codecaptured.com";
+  lldap.domainName = "ldap.${baseDomainName}";
+  lldap.httpUrl = "https://ldap.${baseDomainName}";
   lldap.ldapBaseDN = "dc=codecaptured,dc=com";
 
   sops.secrets."lldap/jwt-secret".owner = "lldap";
@@ -68,7 +72,7 @@
 
   authelia.enable = true;
   authelia.subDomainName = "auth";
-  authelia.baseDomainName = "codecaptured.com";
+  authelia.baseDomainName = baseDomainName
   authelia.ldapBaseDN = "dc=codecaptured,dc=com";
   authelia.smtpUsername = "codecaptured@gmail.com";
 
@@ -92,24 +96,35 @@
   authelia.smtpPasswordFile = config.sops.secrets."authelia/smtp-password".path;
 
   ntfy.enable = true;
-  ntfy.domainName = "notify.codecaptured.com";
+  ntfy.domainName = "notify.${baseDomainName}";
 
   headscale.enable = true;
   headscale.subDomainName = "net";
-  headscale.baseDomainName = "codecaptured.com";
+  headscale.baseDomainName = baseDomainName;
 
   sops.secrets."headscale/oidc-secret".owner = "headscale";
   headscale.oidcSecretFile = config.sops.secrets."headscale/oidc-secret".path;
 
   tailscale.enable = true;
-  tailscale.domainName = "net.codecaptured.com";
+  tailscale.domainName = "net.${baseDomainName}";
 
   sops.secrets."tailscale/auth-key".owner = "tailscale";
   tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
 
   foundryvtt-router.enable = false;
-  foundryvtt-router.domainName = "vtt.codecaptured.com";
-  foundryvtt-router.proxyPass = "mandalore.contact-taris-testuser.codecaptured.com:30000";
+  foundryvtt-router.domainName = "vtt.${baseDomainName}";
+  foundryvtt-router.proxyPass = "mandalore.contact-taris-testuser.${baseDomainName}:30000";
+
+  # TODO: Will move to internal server
+  namecheap-private-cert.enable = false;
+  namecheap-private-cert.domainName = "internal.${baseDomainName}";
+
+  sops.secrets.namecheap-credentials = {
+    sopsFile = ./secrets/namecheap-credentials.txt;
+    format = "binary";
+  };
+  sops.secrets."namecheap-credentials".owner = "acme";
+  namecheap-private-cert.credentialsFile = config.sops.secrets."namecheap-credentials".path;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

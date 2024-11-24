@@ -10,6 +10,7 @@
     ./headscale.nix
     ./linode.nix
     ./lldap.nix
+    ./namecheap-private-cert.nix
     ./nextcloud.nix
     ./nginx-recommended.nix
     ./ntfy.nix

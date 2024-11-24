@@ -102,8 +102,14 @@ in
             # More specific to less specific. First matching rule wins
             rules = [
               {
-                domain = "*.i.${cfg.baseDomainName}";
+                domain = "net.${cfg.baseDomainName}";
                 policy = "two_factor";
+                subject = [ "group:private_network" ];
+              }
+              {
+                domain = "*.internal.${cfg.baseDomainName}";
+                policy = "two_factor";
+                subject = [ "group:internal_common" ];
               }
               {
                 domain = "*.${cfg.baseDomainName}";
