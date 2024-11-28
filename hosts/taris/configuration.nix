@@ -72,7 +72,7 @@ in
 
   authelia.enable = true;
   authelia.subDomainName = "auth";
-  authelia.baseDomainName = baseDomainName
+  authelia.baseDomainName = baseDomainName;
   authelia.ldapBaseDN = "dc=codecaptured,dc=com";
   authelia.smtpUsername = "codecaptured@gmail.com";
 

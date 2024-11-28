@@ -26,7 +26,6 @@ in
       nginx = {
         enable = true;
         virtualHosts."${cfg.subDomainName}.${cfg.baseDomainName}" = {
-          # enableAuthelia = true;
           forceSSL = true;
           enableACME = true;
           locations."/" = {
@@ -74,7 +73,7 @@ in
           id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
           description = "headscale";
           secret = "$pbkdf2-sha512$310000$Lk0.Ywno0TRsAcKgXwtMkA$qbtvBbeuLXIoWlC82nU9aGL.fKMhUpJd5l2/n4lRHWcp1pvBks/Zw2HsxOzlV5lTTnRzszclo0Y54GQvyyHtDw";
-          authorization_policy = "one_factor";
+          authorization_policy = "two_factor";
           redirect_uris = [ "https://${cfg.subDomainName}.${cfg.baseDomainName}:443/oidc/callback" ];
           scopes = [
             "openid"
