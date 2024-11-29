@@ -1,5 +1,10 @@
 { config, pkgs, ... }:
 
+let
+  primaryUser = "matthew";
+  filesPath = "/mnt/files";
+  mediaPath = "/mnt/media";
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -11,49 +16,66 @@
     "flakes"
   ];
 
+    # Mounts
+  fileSystems.${filesPath} = {
+    device = "192.168.0.205:/mnt/data/files";
+    fsType = "nfs";
+  };
+
+  fileSystems.${mediaPath} = {
+    device = "192.168.0.205:/mnt/data/media";
+    fsType = "nfs";
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  networking.hostName = "alderaan";
+  time.timeZone = "America/Los_Angeles";
+
   sops.defaultSopsFile = ./secrets/secret.yaml;
-  sops.age.keyFile = "/home/matthew/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
 
   user.enable = true;
-  user.name = "matthew";
-  sops.secrets."user/hashed-password" = {};
+  user.name = primaryUser;
+
+  sops.secrets."user/hashed-password" = { };
   user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   sops.secrets."user/hashed-password".neededForUsers = true;
 
   ssh.enable = true;
-  ssh.allowUsername = "matthew";
+  ssh.allowUsername = primaryUser;
+
+  vscode-remote-ssh.enable = true;
 
   security.enable = true;
 
   firewall.enable = true;
-
-  postgresql.enable = true;
-
-  nextcloud.enable = true;
-  nextcloud.domainName = "cloud.i.codecaptured.com";
-  sops.secrets."nextcloud/admin-password".owner = "nextcloud";
-  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
-
-  vscode-remote-ssh.enable = true;
 
   # Other config
   services.fwupd.enable = true;
 
   programs.bash.enableCompletion = true;
 
-  # Generated on install
+  # Services
+  postgresql.enable = true;
+  postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
+  postgresql.backupDataDir = "${filesPath}/backup/postgresql";
+
+  nextcloud.enable = true;
+  nextcloud.domainName = "cloud.i.codecaptured.com";
+  nextcloud.dataDir = "${filesPath}/nextcloud";
+
+  sops.secrets."nextcloud/admin-password".owner = "nextcloud";
+  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
+
+  # Other generated on install
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "alderaan";
-
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Set your time zone.
-  time.timeZone = "America/Los_Angeles";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -75,9 +97,6 @@
     layout = "us";
     variant = "";
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

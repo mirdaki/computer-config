@@ -18,17 +18,19 @@ in
     nextcloud.domainName = lib.mkOption { type = lib.types.str; };
 
     nextcloud.adminpassFile = lib.mkOption { type = lib.types.str; };
+
+    nextcloud.dataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/nextcloud";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
-      # Setup Nextcloud virtual host to listen on ports
       virtualHosts = {
         ${cfg.domainName} = {
-          # Force HTTP redirect to HTTPS
           forceSSL = false;
-          # LetsEncrypt
           enableACME = false;
         };
       };
@@ -38,8 +40,8 @@ in
       enable = true;
       package = pkgs.nextcloud29;
       hostName = cfg.domainName;
+      datadir = cfg.dataDir;
       autoUpdateApps.enable = true;
-      # Needed?
       autoUpdateApps.startAt = "05:00:00";
       maxUploadSize = "16G";
       # Suggested by Nextcloud's health check.

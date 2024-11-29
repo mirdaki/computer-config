@@ -11,12 +11,23 @@ in
 {
   options = {
     postgresql.enable = lib.mkEnableOption "enable postgresql module";
+
+    postgresql.dataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/lib/postgresql/${config.services.postgresql.package.psqlSchema}";
+    };
+
+    postgresql.backupDataDir = lib.mkOption {
+      type = lib.types.str;
+      default = "/var/backup/postgresql";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.postgresql = {
       enable = true;
       package = pkgs.postgresql_15;
+      dataDir = cfg.dataDir;
 
       # Limit which system users can log in as which DB user
       # https://nixos.wiki/wiki/PostgreSQL#Harden_authentication
@@ -39,6 +50,7 @@ in
     services.postgresqlBackup = {
       enable = true;
       startAt = "*-*-* 23:00:00";
+      location = cfg.backupDataDir;
     };
   };
 }

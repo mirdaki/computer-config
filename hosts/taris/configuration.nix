@@ -30,6 +30,7 @@ in
 
   user.enable = true;
   user.name = primaryUser;
+
   sops.secrets."user/hashed-password" = { };
   user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   sops.secrets."user/hashed-password".neededForUsers = true;
@@ -37,12 +38,13 @@ in
   ssh.enable = true;
   ssh.allowUsername = primaryUser;
 
+  vscode-remote-ssh.enable = true;
+
   security.enable = true;
 
   firewall.enable = true;
 
-  vscode-remote-ssh.enable = true;
-
+  # Other config
   programs.bash.enableCompletion = true;
 
   linode.enable = true;
