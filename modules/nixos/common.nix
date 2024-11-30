@@ -17,6 +17,7 @@
     ./ntfy.nix
     ./postgresql.nix
     ./security.nix
+    ./silverbullet.nix
     ./ssh.nix
     ./tailscale.nix
     ./uptime-kuma.nix
