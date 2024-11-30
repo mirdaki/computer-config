@@ -113,20 +113,13 @@ in
   sops.secrets."tailscale/auth-key".owner = "tailscale";
   tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
 
+  nextcloud-oidc.enable = true;
+  nextcloud-oidc.domainName = "cloud.internal.${baseDomainName}";
+
   foundryvtt-router.enable = false;
   foundryvtt-router.domainName = "vtt.${baseDomainName}";
   foundryvtt-router.proxyPass = "mandalore.contact-taris-testuser.${baseDomainName}:30000";
 
-  # TODO: Will move to internal server
-  namecheap-private-cert.enable = false;
-  namecheap-private-cert.domainName = "internal.${baseDomainName}";
-
-  sops.secrets.namecheap-credentials = {
-    sopsFile = ./secrets/namecheap-credentials.txt;
-    format = "binary";
-  };
-  sops.secrets."namecheap-credentials".owner = "acme";
-  namecheap-private-cert.credentialsFile = config.sops.secrets."namecheap-credentials".path;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

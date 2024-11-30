@@ -15,7 +15,8 @@ in
   options = {
     nextcloud.enable = lib.mkEnableOption "enable nextcloud module";
 
-    nextcloud.domainName = lib.mkOption { type = lib.types.str; };
+    nextcloud.baseDomainName = lib.mkOption { type = lib.types.str; };
+    nextcloud.subDomainName = lib.mkOption { type = lib.types.str; };
 
     nextcloud.adminpassFile = lib.mkOption { type = lib.types.str; };
 
@@ -28,18 +29,16 @@ in
   config = lib.mkIf cfg.enable {
     services.nginx = {
       enable = true;
-      virtualHosts = {
-        ${cfg.domainName} = {
-          forceSSL = false;
-          enableACME = false;
-        };
+      virtualHosts."${cfg.subDomainName}.${cfg.baseDomainName}" = {
+        forceSSL = true;
+        useACMEHost = cfg.baseDomainName;
       };
     };
 
     services.nextcloud = {
       enable = true;
       package = pkgs.nextcloud29;
-      hostName = cfg.domainName;
+      hostName = "${cfg.subDomainName}.${cfg.baseDomainName}";
       datadir = cfg.dataDir;
       autoUpdateApps.enable = true;
       autoUpdateApps.startAt = "05:00:00";
@@ -71,7 +70,6 @@ in
     };
 
     services.postgresql = {
-      # Ensure the database, user, and permissions always exist
       ensureDatabases = [ "nextcloud" ];
       ensureUsers = [
         {

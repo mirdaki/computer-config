@@ -46,13 +46,6 @@ in
               "9.9.9.9" # Quad9
               "149.112.112.112" # Quad9 backup
             ];
-            extra_records = [
-              {
-                name = "test.internal.codecaptured.com";
-                type = "A";
-                value = "100.64.0.3";
-              }
-            ];
           };
           oidc = {
             issuer = "https://auth.${cfg.baseDomainName}";

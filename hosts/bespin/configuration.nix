@@ -7,6 +7,8 @@
 
 let
   primaryUser = "matthew";
+  baseDomainName = "codecaptured.com";
+  internalDomainName = "internal.${baseDomainName}";
   filesPath = "/mnt/files";
   mediaPath = "/mnt/media";
 in
@@ -67,6 +69,44 @@ in
   vscode-remote-ssh.enable = true;
 
   # Services
+
+  acme.enable = true;
+  acme.email = "contact+letsencrypt.org@boowho.me";
+
+  nginx-recommended.enable = true;
+
+  tailscale.enable = true;
+  tailscale.domainName = "net.${baseDomainName}";
+
+  sops.secrets."tailscale/auth-key".owner = "tailscale";
+  tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+
+  namecheap-private-cert.enable = true;
+  namecheap-private-cert.domainName = internalDomainName;
+
+  sops.secrets.namecheap-credentials = {
+    sopsFile = ./secrets/namecheap-credentials.txt;
+    format = "binary";
+  };
+  sops.secrets."namecheap-credentials".owner = "acme";
+  namecheap-private-cert.credentialsFile = config.sops.secrets."namecheap-credentials".path;
+
+  postgresql.enable = true;
+  postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
+  postgresql.backupDataDir = "${filesPath}/backup/postgresql";
+
+  nextcloud.enable = true;
+  nextcloud.baseDomainName = internalDomainName;
+  nextcloud.subDomainName = "cloud";
+  nextcloud.dataDir = "${filesPath}/nextcloud";
+
+  sops.secrets."nextcloud/admin-password".owner = "nextcloud";
+  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
+
+  uptime-kuma.enable = true;
+  uptime-kuma.baseDomainName = internalDomainName;
+  uptime-kuma.subDomainName = "status";
+  uptime-kuma.useLocalAcme = true;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
