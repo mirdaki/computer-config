@@ -86,6 +86,7 @@ in
   vscode-remote-ssh.enable = true;
 
   # Services
+
   postgresql.enable = true;
   postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
   postgresql.backupDataDir = "${filesPath}/backup/postgresql";

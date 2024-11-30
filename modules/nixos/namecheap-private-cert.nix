@@ -3,8 +3,6 @@
 
 # Expects the acme module to have already run
 
-# TODO: See if I can pull out the "extra_records" extra DNS rules per service, like authelia OIDC
-
 {
   self,
   config,
@@ -30,27 +28,13 @@ in
         domain = "*.${cfg.domainName}";
         dnsProvider = "namecheap";
         # Ran into issues with the check never succeeding, even though the records were created
-        dnsPropagationCheck = false;
+        # False fixed it then, but in other cases I needed true. Leaving it that way for now
+        dnsPropagationCheck = true;
         credentialsFile = cfg.credentialsFile;
       };
     };
 
     # So nginx can access the credentialsFile
     users.users.nginx.extraGroups = [ "acme" ];
-
-# TODO: Separate out for testing sake
-    # services = {
-    #   nginx = {
-    #     enable = true;
-    #     virtualHosts."test.internal.codecaptured.com" = {
-    #       # enableAuthelia = true;
-    #       forceSSL = true;
-    #       useACMEHost = cfg.domainName;
-    #       locations."/" = {
-    #         proxyPass = "http://127.0.0.1:8123";
-    #       };
-    #     };
-    #   };
-    # };
   };
 }
