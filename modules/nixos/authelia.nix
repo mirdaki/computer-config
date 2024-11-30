@@ -106,6 +106,21 @@ in
                 policy = "two_factor";
                 subject = [ "group:private_network" ];
               }
+              # SilverBullet needs these resources always https://silverbullet.md/Authelia
+              {
+                domain = "notes.internal.${cfg.baseDomainName}";
+                policy = "bypass";
+                resources = [
+                  "/.client/manifest.json$"
+                  "/.client/[a-zA-Z0-9_-]+.png$"
+                  "/service_worker.js$"
+                ];
+              }
+              {
+                domain = "notes.internal.${cfg.baseDomainName}";
+                policy = "two_factor";
+                subject = [ "user:matthew" ];
+              }
               {
                 domain = "*.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
@@ -113,7 +128,7 @@ in
               }
               {
                 domain = "*.${cfg.baseDomainName}";
-                policy = "one_factor";
+                policy = "two_factor";
               }
             ];
           };

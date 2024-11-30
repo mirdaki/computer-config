@@ -58,7 +58,8 @@ in
   postgresql.enable = true;
 
   uptime-kuma.enable = false;
-  uptime-kuma.domainName = "status.${baseDomainName}";
+  uptime-kuma.baseDomainName = baseDomainName;
+  uptime-kuma.subDomainName = "status";
 
   lldap.enable = true;
   lldap.domainName = "ldap.${baseDomainName}";
