@@ -18,19 +18,23 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    users.users.${cfg.name} = {
-      isNormalUser = true;
-      hashedPasswordFile = cfg.hashedPasswordFile;
-      description = "main user";
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ];
-      shell = pkgs.bash;
-      openssh.authorizedKeys.keyFiles = [
-        ../../modules/nixos/ssh-keys/mandalore/id_rsa.pub
-        ../../modules/nixos/ssh-keys/corellia/id_rsa.pub
-      ];
+    users = {
+      # This prevents using normal bash commands to create/modify users
+      mutableUsers = false;
+      users.${cfg.name} = {
+        isNormalUser = true;
+        hashedPasswordFile = cfg.hashedPasswordFile;
+        description = "main user";
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
+        shell = pkgs.bash;
+        openssh.authorizedKeys.keyFiles = [
+          ../../modules/nixos/ssh-keys/mandalore/id_rsa.pub
+          ../../modules/nixos/ssh-keys/corellia/id_rsa.pub
+        ];
+      };
     };
   };
 }

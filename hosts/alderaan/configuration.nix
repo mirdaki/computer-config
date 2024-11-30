@@ -16,7 +16,6 @@ in
     "flakes"
   ];
 
-    # Mounts
   fileSystems.${filesPath} = {
     device = "192.168.0.205:/mnt/data/files";
     fsType = "nfs";
@@ -27,54 +26,21 @@ in
     fsType = "nfs";
   };
 
-  nixpkgs.config.allowUnfree = true;
+  # General settings
 
   networking.hostName = "alderaan";
+
   time.timeZone = "America/Los_Angeles";
 
-  sops.defaultSopsFile = ./secrets/secret.yaml;
-  sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
+  nixpkgs.config.allowUnfree = true;
 
-  user.enable = true;
-  user.name = primaryUser;
-
-  sops.secrets."user/hashed-password" = { };
-  user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
-  sops.secrets."user/hashed-password".neededForUsers = true;
-
-  ssh.enable = true;
-  ssh.allowUsername = primaryUser;
-
-  vscode-remote-ssh.enable = true;
-
-  security.enable = true;
-
-  firewall.enable = true;
-
-  # Other config
   services.fwupd.enable = true;
 
   programs.bash.enableCompletion = true;
 
-  # Services
-  postgresql.enable = true;
-  postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
-  postgresql.backupDataDir = "${filesPath}/backup/postgresql";
-
-  nextcloud.enable = true;
-  nextcloud.domainName = "cloud.i.codecaptured.com";
-  nextcloud.dataDir = "${filesPath}/nextcloud";
-
-  sops.secrets."nextcloud/admin-password".owner = "nextcloud";
-  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
-
-  # Other generated on install
-
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Enable networking
   networking.networkmanager.enable = true;
 
   # Select internationalisation properties.
@@ -97,6 +63,40 @@ in
     layout = "us";
     variant = "";
   };
+
+  sops.defaultSopsFile = ./secrets/secret.yaml;
+  sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
+
+  # Custom modules
+
+  user.enable = true;
+  user.name = primaryUser;
+
+  sops.secrets."user/hashed-password" = { };
+  user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
+  sops.secrets."user/hashed-password".neededForUsers = true;
+
+  ssh.enable = true;
+  ssh.allowUsername = primaryUser;
+
+  security.enable = true;
+
+  firewall.enable = true;
+
+  vscode-remote-ssh.enable = true;
+
+  # Services
+  postgresql.enable = true;
+  postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
+  postgresql.backupDataDir = "${filesPath}/backup/postgresql";
+
+  nextcloud.enable = true;
+  nextcloud.domainName = "cloud.i.codecaptured.com";
+  nextcloud.dataDir = "${filesPath}/nextcloud";
+
+  sops.secrets."nextcloud/admin-password".owner = "nextcloud";
+  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
