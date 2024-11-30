@@ -10,7 +10,7 @@ sudo nixos-rebuild switch --flake ~/computer-config#alderaan
 
 ### First Time Setup
 
-Note: I ran into issues (where to put the sops secret, clone the config too, the default ssh blocking root) having just a root user. There is a dependency problem since this config sets up the user and their password. This can be solved with ad-hoc steps (get the config as root, generate a secret as root, build with the user but without ssh steps, then migrate the config to the users directory and clean up). But that's not clean. A future option might be to create a user with a default password or with an empty password to start with, then do these steps. Need to investigate further.
+Install nixos using [these instructions](https://nixos.org/manual/nixos/stable/#sec-installation-manual). Create the main user and su to them for cloning this repo (to keep file permissions sane). Create the new host (copy config from /etx/nixos/, add to flake, etc) and configure files as needed.
 
 This may not be needed going forward, but I did need this to use experimental features (nix command and flakes) in CLI ad hoc:
 
