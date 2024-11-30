@@ -39,6 +39,7 @@ in
       enable = true;
       package = pkgs.nextcloud29;
       hostName = "${cfg.subDomainName}.${cfg.baseDomainName}";
+      https = true;
       datadir = cfg.dataDir;
       autoUpdateApps.enable = true;
       autoUpdateApps.startAt = "05:00:00";
@@ -47,7 +48,19 @@ in
       phpOptions."opcache.interned_strings_buffer" = "16";
 
       settings = {
+        # See other steps for OIDC (some require using the UI)
+        # https://www.authelia.com/integration/openid-connect/nextcloud/#openid-connect-user-backend-app
+        user_oidc = [ { use_pkce = true; } ];
+
+        # So Nextcloud trust the SSL that nginx provides
+        trusted_proxies = [
+          "localhost"
+          "127.0.0.1"
+          "100.64.0.2" # Tailscale "proxy" node
+        ];
+
         default_phone_region = "US";
+        overwriteprotocol = "https";
       };
 
       config = {
@@ -65,6 +78,7 @@ in
           contacts
           gpoddersync
           memories
+          user_oidc
           ;
       };
     };
