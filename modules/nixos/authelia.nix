@@ -117,14 +117,14 @@ in
                 ];
               }
               {
-                domain = "notes.internal.${cfg.baseDomainName}";
+                domain = "cloud.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
-                subject = [ "user:matthew" ];
+                subject = [ "group:internal_common" ];
               }
               {
                 domain = "*.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
-                subject = [ "group:internal_common" ];
+                subject = [ "user:matthew" ];
               }
               {
                 domain = "*.${cfg.baseDomainName}";
