@@ -10,6 +10,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix.url = "github:Mic92/sops-nix";
+    foundryvtt.url = "github:reckenrode/nix-foundryvtt/4f37df2400138a57126ee3ebcee5602ef82ef220";
   };
 
   outputs =
@@ -19,6 +20,7 @@
       home-manager,
       nixos-hardware,
       sops-nix,
+      foundryvtt,
       ...
     }:
     {
@@ -75,6 +77,9 @@
 
         bespin = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = {
+            inherit foundryvtt;
+          };
           modules = [
             ./hosts/bespin/configuration.nix
             sops-nix.nixosModules.sops
@@ -84,6 +89,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/bespin/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
       };

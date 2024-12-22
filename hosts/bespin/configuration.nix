@@ -139,6 +139,9 @@ in
   silverbullet.subDomainName = "notes";
   silverbullet.dataDir = "${filesPath}/silverbullet";
 
+  foundryvtt.enable = true;
+  foundryvtt.domainName = "vtt.${baseDomainName}";
+
   # Test code
   # virtualisation.oci-containers.backend = "podman";
   # virtualisation.oci-containers.containers."librespeed" = {

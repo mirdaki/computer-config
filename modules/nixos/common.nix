@@ -7,6 +7,7 @@
     ./authelia.nix
     ./firewall.nix
     ./foundryvtt-router.nix
+    ./foundryvtt.nix
     ./headscale.nix
     ./linode.nix
     ./lldap.nix
