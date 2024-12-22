@@ -58,3 +58,11 @@ DROP DATABASE <name>;
 ```bash
 sudo nix-collect-garbage -d
 ```
+
+### Upgrading NixOS
+
+Update the input URLs in the `flake.nix` file. Then run
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake ~/computer-config#alderaan
+```
