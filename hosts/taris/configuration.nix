@@ -45,11 +45,13 @@ in
   firewall.enable = true;
 
   # Other config
+  
   programs.bash.enableCompletion = true;
 
   linode.enable = true;
 
   # Services
+
   acme.enable = true;
   acme.email = "contact+letsencrypt.org@boowho.me";
 
@@ -114,12 +116,14 @@ in
   sops.secrets."tailscale/auth-key".owner = "tailscale";
   tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
 
+  # Support for internal services
+
   nextcloud-oidc.enable = true;
   nextcloud-oidc.domainName = "cloud.internal.${baseDomainName}";
 
-  foundryvtt-router.enable = false;
+  foundryvtt-router.enable = true;
   foundryvtt-router.domainName = "vtt.${baseDomainName}";
-  foundryvtt-router.proxyPass = "mandalore.contact-taris-testuser.${baseDomainName}:30000";
+  foundryvtt-router.proxyPass = "bespin.contact-taris-net.${baseDomainName}:30000";
 
 
   # This option defines the first version of NixOS you have installed on this particular machine,
