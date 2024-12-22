@@ -29,7 +29,7 @@ in
           "networkmanager"
           "wheel"
         ];
-        shell = pkgs.nushell;
+        shell = pkgs.bash;
         openssh.authorizedKeys.keyFiles = [
           ../../modules/nixos/ssh-keys/mandalore/id_rsa.pub
           ../../modules/nixos/ssh-keys/corellia/id_rsa.pub

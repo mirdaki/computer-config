@@ -81,6 +81,32 @@ in
   sops.secrets."tailscale/auth-key".owner = "tailscale";
   tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
 
+  sops.secrets."protonvpn-exit-node/wireguard-private-key".owner = "root";
+
+  protonvpn-exit-node-seattle.enable = true;
+
+  protonvpn-exit-node-seattle.wireguardPrivateKeyFile =
+    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".owner = "root";
+  protonvpn-exit-node-seattle.tailscaleAuthKeyFile =
+    config.sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".path;
+
+  protonvpn-exit-node-losangeles.enable = true;
+
+  protonvpn-exit-node-losangeles.wireguardPrivateKeyFile =
+    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".owner = "root";
+  protonvpn-exit-node-losangeles.tailscaleAuthKeyFile =
+    config.sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".path;
+
+  protonvpn-exit-node-miami.enable = true;
+
+  protonvpn-exit-node-miami.wireguardPrivateKeyFile =
+    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".owner = "root";
+  protonvpn-exit-node-miami.tailscaleAuthKeyFile =
+    config.sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".path;
+
   namecheap-private-cert.enable = true;
   namecheap-private-cert.domainName = internalDomainName;
 
@@ -112,6 +138,19 @@ in
   silverbullet.baseDomainName = internalDomainName;
   silverbullet.subDomainName = "notes";
   silverbullet.dataDir = "${filesPath}/silverbullet";
+
+  # Test code
+  # virtualisation.oci-containers.backend = "podman";
+  # virtualisation.oci-containers.containers."librespeed" = {
+  #   image = "linuxserver/librespeed";
+  #   autoStart = true;
+  #   ports = [ "127.0.0.1:1234:80" ];
+  #   environment = {
+  #     "PASSWORD"="PASSWORD"
+  #   };
+  #   volumes:
+  #     - /path/to/librespeed/config:/config
+  # };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
