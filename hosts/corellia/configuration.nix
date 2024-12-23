@@ -4,8 +4,6 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/nixos/miniflux.nix
-      ../../modules/nixos/uptime-kuma.nix
     ];
 
   # My changes

@@ -43,6 +43,19 @@ nix-shell -p sops --run "sops -e /etc/krb5/krb5.keytab > krb5.keytab"
 nix-shell -p sops --run "sops -d krb5.keytab > /tmp/krb5.keytab"
 ```
 
+### Creating OIDC Info
+
+Per the [Authelia docs](https://www.authelia.com/integration/openid-connect/frequently-asked-questions/#how-do-i-generate-a-client-identifier-or-client-secret)
+
+```bash
+# For the ID
+nix-shell -p authelia --run "authelia crypto rand --length 72 --charset rfc3
+986"
+
+# For the secret
+nix-shell -p authelia --run "authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986"
+```
+
 ### Cleaning Tables
 
 If you want to drop a table (for instances, to remove testing data)

@@ -75,85 +75,94 @@ in
 
   nginx-recommended.enable = true;
 
-  tailscale.enable = true;
-  tailscale.domainName = "net.${baseDomainName}";
-
+  tailscale = {
+    enable = true;
+    domainName = "net.${baseDomainName}";
+    authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+  };
   sops.secrets."tailscale/auth-key".owner = "tailscale";
-  tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
 
   sops.secrets."protonvpn-exit-node/wireguard-private-key".owner = "root";
 
-  protonvpn-exit-node-seattle.enable = true;
-
-  protonvpn-exit-node-seattle.wireguardPrivateKeyFile =
-    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  protonvpn-exit-node-seattle = {
+    enable = true;
+    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".path;
+  };
   sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".owner = "root";
-  protonvpn-exit-node-seattle.tailscaleAuthKeyFile =
-    config.sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".path;
 
-  protonvpn-exit-node-losangeles.enable = true;
-
-  protonvpn-exit-node-losangeles.wireguardPrivateKeyFile =
-    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  protonvpn-exit-node-losangeles = {
+    enable = true;
+    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".path;
+  };
   sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".owner = "root";
-  protonvpn-exit-node-losangeles.tailscaleAuthKeyFile =
-    config.sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".path;
 
-  protonvpn-exit-node-miami.enable = true;
-
-  protonvpn-exit-node-miami.wireguardPrivateKeyFile =
-    config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+  protonvpn-exit-node-miami = {
+    enable = true;
+    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
+    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".path;
+  };
   sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".owner = "root";
-  protonvpn-exit-node-miami.tailscaleAuthKeyFile =
-    config.sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".path;
 
-  namecheap-private-cert.enable = true;
-  namecheap-private-cert.domainName = internalDomainName;
-
+  namecheap-private-cert = {
+    enable = true;
+    domainName = internalDomainName;
+    credentialsFile = config.sops.secrets."namecheap-credentials".path;
+  };
+  sops.secrets."namecheap-credentials".owner = "acme";
   sops.secrets.namecheap-credentials = {
     sopsFile = ./secrets/namecheap-credentials.txt;
     format = "binary";
   };
-  sops.secrets."namecheap-credentials".owner = "acme";
-  namecheap-private-cert.credentialsFile = config.sops.secrets."namecheap-credentials".path;
 
-  postgresql.enable = true;
-  postgresql.dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
-  postgresql.backupDataDir = "${filesPath}/backup/postgresql";
+  postgresql = {
+    enable = true;
+    dataDir = "${filesPath}/postgresql/${config.services.postgresql.package.psqlSchema}";
+    backupDataDir = "${filesPath}/backup/postgresql";
+  };
 
-  nextcloud.enable = true;
-  nextcloud.baseDomainName = internalDomainName;
-  nextcloud.subDomainName = "cloud";
-  nextcloud.dataDir = "${filesPath}/nextcloud";
-
+  nextcloud = {
+    enable = true;
+    baseDomainName = internalDomainName;
+    subDomainName = "cloud";
+    dataDir = "${filesPath}/nextcloud";
+    adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
+  };
   sops.secrets."nextcloud/admin-password".owner = "nextcloud";
-  nextcloud.adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
 
-  uptime-kuma.enable = true;
-  uptime-kuma.baseDomainName = internalDomainName;
-  uptime-kuma.subDomainName = "status";
-  uptime-kuma.useLocalAcme = true;
+  uptime-kuma = {
+    enable = true;
+    baseDomainName = internalDomainName;
+    subDomainName = "status";
+    useLocalAcme = true;
+  };
 
-  silverbullet.enable = true;
-  silverbullet.baseDomainName = internalDomainName;
-  silverbullet.subDomainName = "notes";
-  silverbullet.dataDir = "${filesPath}/silverbullet";
+  silverbullet = {
+    enable = true;
+    baseDomainName = internalDomainName;
+    subDomainName = "notes";
+    dataDir = "${filesPath}/silverbullet";
+  };
 
-  foundryvtt.enable = true;
-  foundryvtt.domainName = "vtt.${baseDomainName}";
+  foundryvtt = {
+    enable = true;
+    domainName = "vtt.${baseDomainName}";
+  };
 
-  # Test code
-  # virtualisation.oci-containers.backend = "podman";
-  # virtualisation.oci-containers.containers."librespeed" = {
-  #   image = "linuxserver/librespeed";
-  #   autoStart = true;
-  #   ports = [ "127.0.0.1:1234:80" ];
-  #   environment = {
-  #     "PASSWORD"="PASSWORD"
-  #   };
-  #   volumes:
-  #     - /path/to/librespeed/config:/config
-  # };
+  miniflux = {
+    enable = true;
+    subDomainName = "reader";
+    baseDomainName = internalDomainName;
+    authDomainName = "auth.${baseDomainName}";
+
+    adminPasswordFile = config.sops.secrets."miniflux/admin-password".path;
+    oauth2ClientIdFile = config.sops.secrets."miniflux/oauth2-client-id".path;
+    oauth2ClientSecretFile = config.sops.secrets."miniflux/oauth2-client-secret".path;
+  };
+  sops.secrets."miniflux/admin-password".owner = "miniflux";
+  sops.secrets."miniflux/oauth2-client-id".owner = "miniflux";
+  sops.secrets."miniflux/oauth2-client-secret".owner = "miniflux";
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

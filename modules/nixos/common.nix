@@ -11,6 +11,7 @@
     ./headscale.nix
     ./linode.nix
     ./lldap.nix
+    ./miniflux.nix
     ./namecheap-private-cert.nix
     ./nextcloud-oidc.nix
     ./nextcloud.nix
