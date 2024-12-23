@@ -130,6 +130,11 @@ in
     domainName = "cloud.internal.${baseDomainName}";
   };
 
+  miniflux-oidc = {
+    enable = true;
+    domainName = "reader.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";
