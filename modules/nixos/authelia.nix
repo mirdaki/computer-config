@@ -74,7 +74,7 @@ in
             '';
             proxyPass = "http://127.0.0.1:9091";
           };
-          locations."/api/verify" = {
+          locations."/api/authz/*" = {
             proxyPass = "http://127.0.0.1:9091";
           };
         };
@@ -86,11 +86,10 @@ in
           theme = "auto";
           log.level = "debug";
           password_policy.zxcvbn.enabled = true;
-          session.domain = cfg.baseDomainName;
 
           authentication_backend.ldap = {
-            implementation = "custom";
-            url = "ldap://localhost:3890";
+            # implementation = "lldap";
+            address = "ldap://localhost:3890";
             base_dn = cfg.ldapBaseDN;
             users_filter = "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))";
             groups_filter = "(member={dn})";
@@ -134,18 +133,29 @@ in
           };
 
           storage.postgres = {
-            host = "/run/postgresql";
-            port = 5432;
+            address = "unix:///run/postgresql";
             database = "authelia-main";
             username = "authelia-main";
             password = "authelia-main";
           };
 
+          session.cookies = [
+            {
+              domain = cfg.baseDomainName;
+              authelia_url = "https://${cfg.subDomainName}.${cfg.baseDomainName}";
+              # The period of time the user can be inactive for until the session is destroyed. Useful if you want long session timers but don’t want unused devices to be vulnerable.
+              inactivity = "1h";
+              # The period of time before the cookie expires and the session is destroyed. This is overridden by remember_me when the remember me box is checked.
+              expiration = "1d";
+              # The period of time before the cookie expires and the session is destroyed when the remember me box is checked. Setting this to -1 disables this feature entirely for this session cookie domain
+              remember_me = "3M";
+            }
+          ];
+
           notifier.smtp = {
             username = cfg.smtpUsername;
             sender = "auth@${cfg.baseDomainName}";
-            host = "smtp.gmail.com";
-            port = "587";
+            address = "submission://smtp.gmail.com:587";
           };
         };
 

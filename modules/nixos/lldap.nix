@@ -12,11 +12,9 @@ in
   options = {
     lldap.enable = lib.mkEnableOption "enable lldap module";
     lldap.domainName = lib.mkOption { type = lib.types.str; };
-    lldap.httpUrl = lib.mkOption { type = lib.types.str; };
     lldap.ldapBaseDN = lib.mkOption { type = lib.types.str; };
     lldap.jwtSecretFile = lib.mkOption { type = lib.types.str; };
     lldap.ldapUserPassFile = lib.mkOption { type = lib.types.str; };
-    lldap.keySeedFile = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -36,13 +34,12 @@ in
         enable = true;
         settings = {
           ldap_base_dn = cfg.ldapBaseDN;
-          http_url = cfg.httpUrl;
+          http_url = "https://${cfg.domainName}";
           database_url = "postgresql:///lldap?host=/run/postgresql";
         };
         environment = {
           LLDAP_JWT_SECRET_FILE = cfg.jwtSecretFile;
           LLDAP_LDAP_USER_PASS_FILE = cfg.ldapUserPassFile;
-          LLDAP_KEY_SEED = cfg.keySeedFile;
         };
       };
     };

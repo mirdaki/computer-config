@@ -43,12 +43,12 @@ in
       };
     })
 
-    (lib.mkIf cfg.useLocalAcme {
+    (lib.mkIf (cfg.enable && cfg.useLocalAcme) {
       services.nginx.virtualHosts."${cfg.subDomainName}.${cfg.baseDomainName}".useACMEHost =
         cfg.baseDomainName;
     })
 
-    (lib.mkIf (!cfg.useLocalAcme) {
+    (lib.mkIf (cfg.enable && !cfg.useLocalAcme) {
       services.nginx.virtualHosts."${cfg.subDomainName}.${cfg.baseDomainName}".enableACME = true;
     })
   ];

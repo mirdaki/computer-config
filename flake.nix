@@ -72,6 +72,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/taris/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
 

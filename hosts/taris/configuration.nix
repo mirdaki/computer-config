@@ -45,8 +45,8 @@ in
   firewall.enable = true;
 
   # Other config
-  
-  programs.bash.enableCompletion = true;
+
+  programs.bash.completion.enable = true;
 
   linode.enable = true;
 
@@ -59,72 +59,82 @@ in
 
   postgresql.enable = true;
 
-  uptime-kuma.enable = false;
-  uptime-kuma.baseDomainName = baseDomainName;
-  uptime-kuma.subDomainName = "status";
+  lldap = {
+    enable = true;
+    domainName = "ldap.${baseDomainName}";
+    ldapBaseDN = "dc=codecaptured,dc=com";
 
-  lldap.enable = true;
-  lldap.domainName = "ldap.${baseDomainName}";
-  lldap.httpUrl = "https://ldap.${baseDomainName}";
-  lldap.ldapBaseDN = "dc=codecaptured,dc=com";
-
+    jwtSecretFile = config.sops.secrets."lldap/jwt-secret".path;
+    ldapUserPassFile = config.sops.secrets."lldap/ldap-user-pass".path;
+  };
   sops.secrets."lldap/jwt-secret".owner = "lldap";
-  lldap.jwtSecretFile = config.sops.secrets."lldap/jwt-secret".path;
   sops.secrets."lldap/ldap-user-pass".owner = "lldap";
-  lldap.ldapUserPassFile = config.sops.secrets."lldap/ldap-user-pass".path;
-  sops.secrets."lldap/key-seed".owner = "lldap";
-  lldap.keySeedFile = config.sops.secrets."lldap/key-seed".path;
 
-  authelia.enable = true;
-  authelia.subDomainName = "auth";
-  authelia.baseDomainName = baseDomainName;
-  authelia.ldapBaseDN = "dc=codecaptured,dc=com";
-  authelia.smtpUsername = "codecaptured@gmail.com";
+  authelia = {
+    enable = true;
+    subDomainName = "auth";
+    baseDomainName = baseDomainName;
+    ldapBaseDN = "dc=codecaptured,dc=com";
+    smtpUsername = "codecaptured@gmail.com";
 
+    jwtSecretFile = config.sops.secrets."authelia/jwt-secret".path;
+    lldapPasswordFile = config.sops.secrets."authelia/lldap-password".path;
+    oidcHmacSecretFile = config.sops.secrets."authelia/oidc-hmac-secret".path;
+    oidcIssuerPrivateKeyFile = config.sops.secrets."authelia-oidc-issuer-private-key".path;
+    sessionSecretFile = config.sops.secrets."authelia/session-secret".path;
+    storageEncryptionKeyFile = config.sops.secrets."authelia/storage-encryption-key".path;
+    smtpPasswordFile = config.sops.secrets."authelia/smtp-password".path;
+  };
   sops.secrets."authelia/jwt-secret".owner = "authelia-main";
-  authelia.jwtSecretFile = config.sops.secrets."authelia/jwt-secret".path;
   sops.secrets."authelia/lldap-password".owner = "authelia-main";
-  authelia.lldapPasswordFile = config.sops.secrets."authelia/lldap-password".path;
   sops.secrets."authelia/oidc-hmac-secret".owner = "authelia-main";
-  authelia.oidcHmacSecretFile = config.sops.secrets."authelia/oidc-hmac-secret".path;
+  sops.secrets."authelia-oidc-issuer-private-key".owner = "authelia-main";
+  sops.secrets."authelia/session-secret".owner = "authelia-main";
+  sops.secrets."authelia/storage-encryption-key".owner = "authelia-main";
+  sops.secrets."authelia/smtp-password".owner = "authelia-main";
   sops.secrets.authelia-oidc-issuer-private-key = {
     sopsFile = ./secrets/oidc-issuer-private-key.pem;
     format = "binary";
   };
-  sops.secrets."authelia-oidc-issuer-private-key".owner = "authelia-main";
-  authelia.oidcIssuerPrivateKeyFile = config.sops.secrets."authelia-oidc-issuer-private-key".path;
-  sops.secrets."authelia/session-secret".owner = "authelia-main";
-  authelia.sessionSecretFile = config.sops.secrets."authelia/session-secret".path;
-  sops.secrets."authelia/storage-encryption-key".owner = "authelia-main";
-  authelia.storageEncryptionKeyFile = config.sops.secrets."authelia/storage-encryption-key".path;
-  sops.secrets."authelia/smtp-password".owner = "authelia-main";
-  authelia.smtpPasswordFile = config.sops.secrets."authelia/smtp-password".path;
 
-  ntfy.enable = true;
-  ntfy.domainName = "notify.${baseDomainName}";
+  headscale = {
+    enable = true;
+    subDomainName = "net";
+    baseDomainName = baseDomainName;
 
-  headscale.enable = true;
-  headscale.subDomainName = "net";
-  headscale.baseDomainName = baseDomainName;
-
+    oidcSecretFile = config.sops.secrets."headscale/oidc-secret".path;
+  };
   sops.secrets."headscale/oidc-secret".owner = "headscale";
-  headscale.oidcSecretFile = config.sops.secrets."headscale/oidc-secret".path;
 
-  tailscale.enable = true;
-  tailscale.domainName = "net.${baseDomainName}";
+  tailscale = {
+    enable = true;
+    domainName = "net.${baseDomainName}";
 
+    authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+  };
   sops.secrets."tailscale/auth-key".owner = "tailscale";
-  tailscale.authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+
+  ntfy = {
+    enable = true;
+    domainName = "notify.${baseDomainName}";
+  };
+
+  # uptime-kuma.enable = false;
+  # uptime-kuma.baseDomainName = baseDomainName;
+  # uptime-kuma.subDomainName = "status";
 
   # Support for internal services
 
-  nextcloud-oidc.enable = true;
-  nextcloud-oidc.domainName = "cloud.internal.${baseDomainName}";
+  nextcloud-oidc = {
+    enable = true;
+    domainName = "cloud.internal.${baseDomainName}";
+  };
 
-  foundryvtt-router.enable = true;
-  foundryvtt-router.domainName = "vtt.${baseDomainName}";
-  foundryvtt-router.proxyPass = "bespin.contact-taris-net.${baseDomainName}:30000";
-
+  foundryvtt-router = {
+    enable = true;
+    domainName = "vtt.${baseDomainName}";
+    proxyPass = "bespin.internal.${baseDomainName}:30000";
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

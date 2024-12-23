@@ -11,7 +11,7 @@
   # My changes
   services.fwupd.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
   virtualisation.docker.enable = true;
 
   # Bootloader.

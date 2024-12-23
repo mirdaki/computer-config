@@ -36,7 +36,7 @@ in
 
   services.fwupd.enable = true;
 
-  programs.bash.enableCompletion = true;
+  programs.bash.completion.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

@@ -40,9 +40,9 @@ in
         port = 8085;
         settings = {
           server_url = "https://${cfg.subDomainName}.${cfg.baseDomainName}:443";
-          dns_config = {
-            base_domain = cfg.baseDomainName;
-            nameservers = [
+          dns = {
+            base_domain = "internal.${cfg.subDomainName}.${cfg.baseDomainName}";
+            nameservers.global = [
               "9.9.9.9" # Quad9
               "149.112.112.112" # Quad9 backup
             ];
@@ -63,9 +63,9 @@ in
 
       authelia.instances.main.settings.identity_providers.oidc.clients = [
         {
-          id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
-          description = "headscale";
-          secret = "$pbkdf2-sha512$310000$Lk0.Ywno0TRsAcKgXwtMkA$qbtvBbeuLXIoWlC82nU9aGL.fKMhUpJd5l2/n4lRHWcp1pvBks/Zw2HsxOzlV5lTTnRzszclo0Y54GQvyyHtDw";
+          client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
+          client_name = "headscale";
+          client_secret = "$pbkdf2-sha512$310000$Lk0.Ywno0TRsAcKgXwtMkA$qbtvBbeuLXIoWlC82nU9aGL.fKMhUpJd5l2/n4lRHWcp1pvBks/Zw2HsxOzlV5lTTnRzszclo0Y54GQvyyHtDw";
           authorization_policy = "two_factor";
           redirect_uris = [ "https://${cfg.subDomainName}.${cfg.baseDomainName}:443/oidc/callback" ];
           scopes = [
