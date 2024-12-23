@@ -6,28 +6,42 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.username = "matthew";
+  home.homeDirectory = "/home/matthew";
+
   gnome.enable = true;
   gnome-extensions.enable = true;
+
+  # Common modules
 
   git.enable = true;
   cli-tools.enable = true;
 
-  home.username = "matthew";
-  home.homeDirectory = "/home/matthew";
+  # Other config
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
-    nextcloud-client
-    protonvpn-gui
+    cargo
+    darktable
     discord
     element-desktop
-    silverbullet
-    vlc
+    gcc
+    localsend
+    nextcloud-client
     nixpkgs-fmt
+    protonvpn-gui
+    rustc
+    silverbullet
+    ungoogled-chromium
+    vlc
     vscode.fhs
     yarn
   ];
+
+  programs = {
+    firefox = {
+      enable = true;
+    };
+  };
 
   services.nextcloud-client = {
     enable = true;
@@ -39,12 +53,6 @@
   systemd.user.services.nextcloud-client = {
     Unit = {
       After = pkgs.lib.mkForce "graphical-session.target";
-    };
-  };
-
-  programs = {
-    firefox = {
-      enable = true;
     };
   };
 

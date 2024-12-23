@@ -30,6 +30,7 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/corellia/configuration.nix
+            sops-nix.nixosModules.sops
             nixos-hardware.nixosModules.dell-xps-13-9370
             home-manager.nixosModules.home-manager
             {
@@ -37,6 +38,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/corellia/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
@@ -51,6 +53,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/alderaan/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
 

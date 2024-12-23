@@ -1,6 +1,11 @@
 # TODO: Extensions still need to be enabled via the extensions app
 
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.gnome-extensions;
@@ -17,14 +22,16 @@ in
       settings = {
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          enabled-extensions = [ "appindicatorsupport@rgcjonas.gmail.com" "dash-to-dock@micxgx.gmail.com" ];
+          enabled-extensions = [
+            "appindicatorsupport@rgcjonas.gmail.com"
+            "dash-to-dock@micxgx.gmail.com"
+          ];
         };
 
         "org/gnome/shell/extensions/appindicator" = {
           icon-opacity = 240;
           icon-saturation = 2.7755575615628914e-17;
         };
-
 
         "org/gnome/shell/extensions/dash-to-dock" = {
           animate-show-apps = true;
@@ -45,7 +52,7 @@ in
     };
 
     home.packages = with pkgs; [
-      gnome.gnome-tweaks
+      gnome-tweaks
 
       gnomeExtensions.appindicator
       gnomeExtensions.dash-to-dock
