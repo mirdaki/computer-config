@@ -1,4 +1,8 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ../../modules/home-manager/common.nix ];
@@ -25,9 +29,12 @@
     discord
     element-desktop
     gcc
+    gimp
+    inkscape
     localsend
     nextcloud-client
     nixpkgs-fmt
+    nodejs_23
     protonvpn-gui
     rustc
     silverbullet

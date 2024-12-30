@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 let
   primaryUser = "matthew";
@@ -95,7 +100,10 @@ in
 
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [ nixfmt-rfc-style ];
+  environment.systemPackages = [
+    pkgs.nixfmt-rfc-style
+    pkgs-unstable.ghostty
+  ];
 
   tailscale = {
     enable = true;
@@ -103,6 +111,11 @@ in
     authKeyFile = config.sops.secrets."tailscale/auth-key".path;
   };
   sops.secrets."tailscale/auth-key".owner = config.users.users.tailscale.name;
+
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

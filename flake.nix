@@ -26,8 +26,13 @@
     {
       nixosConfigurations = {
 
-        corellia = nixpkgs.lib.nixosSystem {
+        corellia = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
+          specialArgs = {
+            pkgs-unstable = import nixpkgs-unstable {
+              inherit system;
+            };
+          };
           modules = [
             ./hosts/corellia/configuration.nix
             sops-nix.nixosModules.sops
@@ -61,8 +66,6 @@
           system = "x86_64-linux";
           specialArgs = {
             pkgs-unstable = import nixpkgs-unstable {
-              # Refer to the `system` parameter from
-              # the outer scope recursively
               inherit system;
             };
           };

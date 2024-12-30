@@ -128,7 +128,7 @@ in
 
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
           binding = "<Super>t";
-          command = "kgx";
+          command = "ghostty";
           name = "Terminal";
         };
 
@@ -139,7 +139,13 @@ in
         };
 
         "org/gnome/shell" = {
-          favorite-apps = [ "org.gnome.Nautilus.desktop" "firefox.desktop" "code.desktop" "element-desktop.desktop" "discord.desktop" ];
+          favorite-apps = [
+            "org.gnome.Nautilus.desktop"
+            "firefox.desktop"
+            "code.desktop"
+            "element-desktop.desktop"
+            "discord.desktop"
+          ];
         };
 
         "org/gnome/shell/app-switcher" = {
