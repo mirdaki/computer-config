@@ -65,11 +65,11 @@ let
 
           ## Legacy Method: Set $target_url to the original requested URL.
           ## This requires http_set_misc module, replace 'set_escape_uri' with 'set' if you don't have this module.
-          set $target_url $scheme://$http_host$request_uri;
+          # set $target_url $scheme://$http_host$request_uri;
 
           ## Legacy Method: When there is a 401 response code from the authz endpoint redirect to the portal with the 'rd'
           ## URL parameter set to $target_url. This requires users update 'auth.example.com/' with their external authelia URL.
-          error_page 401 =302 https://auth.codecaptured.com/?rd=$target_url;
+          # error_page 401 =302 https://auth.codecaptured.com/?rd=$target_url;
         '';
       };
     };
