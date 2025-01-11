@@ -74,7 +74,10 @@ in
             '';
             proxyPass = "http://127.0.0.1:9091";
           };
-          locations."/api/authz/*" = {
+          locations."/api/verify/" = {
+            proxyPass = "http://127.0.0.1:9091";
+          };
+          locations."/api/authz/" = {
             proxyPass = "http://127.0.0.1:9091";
           };
         };
@@ -124,6 +127,11 @@ in
                 domain = "*.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
                 subject = [ "user:matthew" ];
+              }
+              {
+                domain = "vtt.${cfg.baseDomainName}";
+                policy = "two_factor";
+                subject = [ "group:vtt_access" ];
               }
               {
                 domain = "*.${cfg.baseDomainName}";
