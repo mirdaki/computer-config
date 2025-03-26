@@ -135,6 +135,11 @@ in
     domainName = "reader.internal.${baseDomainName}";
   };
 
+  jellyfin-oidc = {
+    enable = true;
+    domainName = "jellyfin.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";

@@ -124,6 +124,14 @@ in
                 subject = [ "group:internal_common" ];
               }
               {
+                domain = "jellyfin.internal.${cfg.baseDomainName}";
+                policy = "two_factor";
+                subject = [
+                  "group:jellyfin_admin"
+                  "group:jellyfin_user"
+                ];
+              }
+              {
                 domain = "*.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
                 subject = [ "user:matthew" ];
