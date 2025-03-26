@@ -9,6 +9,7 @@
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix
+    ./jellyfin.nix
     ./linode.nix
     ./lldap.nix
     ./miniflux-oidc.nix

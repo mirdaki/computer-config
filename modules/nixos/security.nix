@@ -15,7 +15,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Limit access to the nix pacakge manager
+    # Limit access to the nix package manager
     nix.settings.allowed-users = [ "@wheel" ];
 
     security.sudo.execWheelOnly = true;

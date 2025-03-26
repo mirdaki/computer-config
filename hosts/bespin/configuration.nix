@@ -164,6 +164,13 @@ in
   sops.secrets."miniflux/oauth2-client-id".owner = "miniflux";
   sops.secrets."miniflux/oauth2-client-secret".owner = "miniflux";
 
+  jellyfin = {
+    enable = true;
+    baseDomainName = internalDomainName;
+    subDomainName = "jellyfin";
+    dataDir = "${mediaPath}/jellyfin";
+  };
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
