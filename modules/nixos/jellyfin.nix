@@ -52,6 +52,9 @@ in
     services.jellyfin = {
       enable = true;
       dataDir = cfg.dataDir;
+
+      # For access within the home network without tailscale
+      openFirewall = true;
     };
   };
 }
