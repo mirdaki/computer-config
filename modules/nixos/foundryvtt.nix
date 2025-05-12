@@ -30,7 +30,7 @@ in
     services.foundryvtt = {
       enable = true;
       hostName = cfg.domainName;
-      package = foundryvtt.packages.${pkgs.system}.foundryvtt_12; # Sets the version to the latest FoundryVTT v12.
+      package = foundryvtt.packages.${pkgs.system}.foundryvtt_13;
       minifyStaticFiles = true;
       proxyPort = 443;
       proxySSL = true;

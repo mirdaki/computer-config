@@ -148,6 +148,7 @@ in
   foundryvtt = {
     enable = true;
     domainName = "vtt.${baseDomainName}";
+    dataDir = "${filesPath}/foundryvtt";
   };
 
   miniflux = {

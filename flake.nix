@@ -10,7 +10,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix.url = "github:Mic92/sops-nix";
-    foundryvtt.url = "github:reckenrode/nix-foundryvtt/4f37df2400138a57126ee3ebcee5602ef82ef220";
+    foundryvtt.url = "github:reckenrode/nix-foundryvtt/f1b401831d796dd94cf5a11b65fd169a199d4ff0";
   };
 
   outputs =
@@ -43,7 +43,6 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/corellia/home.nix;
             }
-            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
@@ -58,7 +57,6 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/alderaan/home.nix;
             }
-            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
@@ -78,7 +76,6 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/taris/home.nix;
             }
-            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
