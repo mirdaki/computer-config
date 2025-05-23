@@ -61,6 +61,21 @@ in
 
         default_phone_region = "US";
         overwriteprotocol = "https";
+
+        # Defaults from here https://github.com/nextcloud/server/blob/master/config/config.sample.php#L1486
+        # Needed to make them explicit to add HEIC
+        enabledPreviewProviders = [
+          "OC\\Preview\\Image"
+          "OC\\Preview\\Movie"
+          "OC\\Preview\\PDF"
+          "OC\\Preview\\MSOfficeDoc"
+          "OC\\Preview\\MSOffice"
+          "OC\\Preview\\Photoshop"
+          "OC\\Preview\\SVG"
+          "OC\\Preview\\TIFF"
+
+          "OC\\Preview\\HEIC"
+        ];
       };
 
       config = {
@@ -78,6 +93,8 @@ in
           contacts
           gpoddersync
           memories
+          # TODO: Recognize fails to run due to a js error. Will try again with an update
+          # recognize
           user_oidc
           ;
       };
