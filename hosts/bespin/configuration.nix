@@ -126,6 +126,7 @@ in
     enable = true;
     baseDomainName = internalDomainName;
     subDomainName = "cloud";
+    collaboraSubDomainName = "office";
     dataDir = "${filesPath}/nextcloud";
     adminpassFile = config.sops.secrets."nextcloud/admin-password".path;
   };
