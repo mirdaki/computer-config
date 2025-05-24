@@ -140,6 +140,11 @@ in
     domainName = "jellyfin.internal.${baseDomainName}";
   };
 
+  mealie-oidc = {
+    enable = true;
+    domainName = "recipes.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";

@@ -14,6 +14,7 @@
     ./linode.nix
     ./lldap.nix
     ./mealie.nix
+    ./mealie-oidc.nix
     ./miniflux-oidc.nix
     ./miniflux.nix
     ./namecheap-private-cert.nix
