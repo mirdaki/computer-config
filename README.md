@@ -39,8 +39,8 @@ nix-shell -p sops --run "sops hosts/alderaan/secrets/secret.yaml"
 
 Binary files. With separate encrypt and decrypt stages
 ```bash
-nix-shell -p sops --run "sops -e /etc/krb5/krb5.keytab > krb5.keytab"
-nix-shell -p sops --run "sops -d krb5.keytab > /tmp/krb5.keytab"
+nix-shell -p sops --run "sops -e decrypted.txt > encrypted.txt"
+nix-shell -p sops --run "sops -d encrypted.txt > decrypted.txt"
 ```
 
 ### Creating OIDC Info
@@ -49,8 +49,7 @@ Per the [Authelia docs](https://www.authelia.com/integration/openid-connect/freq
 
 ```bash
 # For the ID
-nix-shell -p authelia --run "authelia crypto rand --length 72 --charset rfc3
-986"
+nix-shell -p authelia --run "authelia crypto rand --length 72 --charset rfc3986"
 
 # For the secret
 nix-shell -p authelia --run "authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986"

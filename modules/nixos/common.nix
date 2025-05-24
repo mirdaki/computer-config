@@ -13,6 +13,7 @@
     ./jellyfin.nix
     ./linode.nix
     ./lldap.nix
+    ./mealie.nix
     ./miniflux-oidc.nix
     ./miniflux.nix
     ./namecheap-private-cert.nix

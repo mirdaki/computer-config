@@ -173,6 +173,23 @@ in
     dataDir = "${mediaPath}/jellyfin";
   };
 
+  mealie = {
+    enable = true;
+    subDomainName = "recipes";
+    baseDomainName = internalDomainName;
+
+    smtpEmail = "codecaptured@gmail.com";
+    authDomainName = "auth.${baseDomainName}";
+    oidcClientId = "KjX1OEL6sYK0zdeGdCJgoIKZ7tFdjFXvtA852RjPi4mDSD0F5ZUWpAvz8N0rKiPiwmqO";
+
+    credentialsFilePath = config.sops.secrets."mealie-credentials".path;
+  };
+  sops.secrets."mealie-credentials".owner = "mealie";
+  sops.secrets.mealie-credentials = {
+    sopsFile = ./secrets/mealie-credentials.env;
+    format = "binary";
+  };
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
