@@ -34,6 +34,7 @@ in
             };
           };
         };
+
         uptime-kuma = {
           enable = true;
           settings = {

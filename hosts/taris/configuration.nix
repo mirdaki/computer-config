@@ -119,9 +119,11 @@ in
     domainName = "notify.${baseDomainName}";
   };
 
-  # uptime-kuma.enable = false;
-  # uptime-kuma.baseDomainName = baseDomainName;
-  # uptime-kuma.subDomainName = "status";
+  uptime-kuma = {
+    enable = true;
+    subDomainName = "status";
+    baseDomainName = baseDomainName;
+  };
 
   # Support for internal services
 

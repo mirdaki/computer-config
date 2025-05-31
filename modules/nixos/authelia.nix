@@ -1,5 +1,7 @@
 # The authelia lldap user must be made manually before this runs. That user must have be in "lldap_password_manager" group
 
+# Note: Some ID's may not be safe to URL encode https://www.authelia.com/integration/openid-connect/frequently-asked-questions/#why-does-authelia-return-an-error-about-the-client-identifier-or-client-secret-being-incorrect-when-they-are-correct
+
 {
   config,
   lib,
