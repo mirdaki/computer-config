@@ -30,14 +30,14 @@ in
           forceSSL = true;
           useACMEHost = cfg.baseDomainName;
           locations."/" = {
-            proxyPass = "http://127.0.0.1:3000";
+            proxyPass = "http://127.0.0.1:3003";
           };
         };
       };
 
       silverbullet = {
         enable = true;
-        listenPort = 3000;
+        listenPort = 3003;
         spaceDir = cfg.dataDir;
         envFile = "/etc/silverbullet.env";
       };
