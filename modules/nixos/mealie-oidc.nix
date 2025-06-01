@@ -25,6 +25,7 @@ in
         
         client_secret = "$pbkdf2-sha512$310000$znSUqyoV0PV7ag5LVmIHUA$o11jQ.IUn/il7aG7R39cBOxrvonNNHKE607W1XLfdcHmG7lvtFflqnYYQ7fLB/9I1JUBYtxQYMzNYTM81Seudg";
         public = false;
+        # Mealie itself restricts to mealie_admin and mealie_user
         authorization_policy = "two_factor";
         require_pkce = true;
         pkce_challenge_method = "S256";

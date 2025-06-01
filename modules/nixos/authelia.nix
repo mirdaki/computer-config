@@ -93,7 +93,6 @@ in
           password_policy.zxcvbn.enabled = true;
 
           authentication_backend.ldap = {
-            # implementation = "lldap";
             address = "ldap://localhost:3890";
             base_dn = cfg.ldapBaseDN;
             users_filter = "(&(|({username_attribute}={input})({mail_attribute}={input}))(objectClass=person))";
@@ -121,22 +120,9 @@ in
                 ];
               }
               {
-                domain = "cloud.internal.${cfg.baseDomainName}";
+                domain = "start.internal.${cfg.baseDomainName}";
                 policy = "two_factor";
                 subject = [ "group:internal_common" ];
-              }
-              {
-                domain = "jellyfin.internal.${cfg.baseDomainName}";
-                policy = "two_factor";
-                subject = [
-                  "group:jellyfin_admin"
-                  "group:jellyfin_user"
-                ];
-              }
-              {
-                domain = "*.internal.${cfg.baseDomainName}";
-                policy = "two_factor";
-                subject = [ "user:matthew" ];
               }
               {
                 domain = "vtt.${cfg.baseDomainName}";
@@ -146,6 +132,7 @@ in
               {
                 domain = "*.${cfg.baseDomainName}";
                 policy = "two_factor";
+                subject = [ "user:matthew" ];
               }
             ];
           };
