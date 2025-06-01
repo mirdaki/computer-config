@@ -55,6 +55,14 @@ nix-shell -p authelia --run "authelia crypto rand --length 72 --charset rfc3986"
 nix-shell -p authelia --run "authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986"
 ```
 
+### Creating Container Module
+
+Using [compose2nix](https://github.com/aksiksi/compose2nix), create a `docker-compose.yml` file and put it in the nixos modules directory. By default is uses podman.
+
+```bash
+nix run github:aksiksi/compose2nix -- -project=name
+```
+
 ### Cleaning Tables
 
 If you want to drop a table (for instances, to remove testing data)

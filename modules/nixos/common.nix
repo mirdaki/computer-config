@@ -6,6 +6,7 @@
     ./authelia-nginx.nix
     ./authelia.nix
     ./firewall.nix
+    ./flame.nix
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix
