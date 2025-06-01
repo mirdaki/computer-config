@@ -28,8 +28,9 @@ in
         require_pkce = true;
         pkce_challenge_method = "S256";
         redirect_uris = [
-          "https://${cfg.domainName}/sso/OID/r/authelia"
           "https://${cfg.domainName}/sso/OID/redirect/authelia"
+          "http://${cfg.domainName}/sso/OID/redirect/authelia"
+
         ];
         scopes = [
           "openid"

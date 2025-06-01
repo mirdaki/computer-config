@@ -147,6 +147,11 @@ in
     domainName = "recipes.internal.${baseDomainName}";
   };
 
+  home-assistant-oidc = {
+    enable = true;
+    domainName = "home.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";

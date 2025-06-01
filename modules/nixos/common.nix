@@ -9,6 +9,7 @@
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix
+    ./home-assistant-oidc.nix
     ./jellyfin-oidc.nix
     ./jellyfin.nix
     ./linode.nix
