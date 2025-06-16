@@ -1,7 +1,7 @@
 # Postgres is discouraged by the headscale maintainers, so using SQLlite by default
 # TODO: Setup a Sqlite backup job
 
-# Create users with LLDAP, then login with that account https://headscale.net/usage/getting-started/#register-a-node
+# Create users with LLDAP, then login with that account https://headscale.net/stable/usage/getting-started/#register-a-node
 {
   config,
   lib,
@@ -52,6 +52,9 @@ in
             client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
             client_secret_path = cfg.oidcSecretFile;
             strip_email_domain = true;
+            # TODO: Only need to keep this until all users are migrated
+            # https://github.com/juanfont/headscale/releases/tag/v0.24.0
+            map_legacy_users = true;
           };
           # Complains if I don't add this
           ip_prefixes = [
@@ -60,6 +63,17 @@ in
           ];
         };
       };
+
+      # TODO: Temporary workaround until headscale is updated to match authelia
+      # https://headscale.net/stable/ref/oidc/#authelia
+      authelia.instances.main.settings.identity_providers.oidc.claims_policies."headscale".id_token = [
+        "groups"
+        "email"
+        "email_verified"
+        "alt_emails"
+        "preferred_username"
+        "name"
+      ];
 
       authelia.instances.main.settings.identity_providers.oidc.clients = [
         {
@@ -72,7 +86,9 @@ in
             "openid"
             "profile"
             "email"
+            "username"
           ];
+          claims_policy = "headscale";
         }
       ];
     };
