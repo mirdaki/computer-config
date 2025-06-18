@@ -18,6 +18,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+
+    # To expose ldap protocol outside of the server
+    networking.firewall.allowedTCPPorts = [ 6360 ];
+
     services = {
       nginx = {
         enable = true;
@@ -28,6 +32,16 @@ in
             proxyPass = "http://127.0.0.1:17170";
           };
         };
+        # To expose ldap protocol outside of the server
+      #   streamConfig = ''
+      #     server {
+      #       listen 6360 ssl;
+      #       proxy_pass 127.0.0.1:6360;
+
+      #       ssl_certificate /var/lib/acme/${cfg.domainName}/cert.pem;
+      #       ssl_certificate_key /var/lib/acme/${cfg.domainName}/key.pem;
+      #      }
+      #   '';
       };
 
       lldap = {
@@ -40,6 +54,9 @@ in
         environment = {
           LLDAP_JWT_SECRET_FILE = cfg.jwtSecretFile;
           LLDAP_LDAP_USER_PASS_FILE = cfg.ldapUserPassFile;
+          LLDAP_LDAPS_OPTIONS__ENABLED = "true";
+          LLDAP_LDAPS_OPTIONS__CERT_FILE = "/var/lib/acme/${cfg.domainName}/cert.pem";
+          LLDAP_LDAPS_OPTIONS__KEY_FILE = "/var/lib/acme/${cfg.domainName}/key.pem";
         };
       };
     };
@@ -49,6 +66,8 @@ in
       users.lldap = {
         group = "lldap";
         isSystemUser = true;
+        # Access to the acme certs
+        extraGroups = [ "nginx" ];
       };
       groups.lldap = { };
     };
