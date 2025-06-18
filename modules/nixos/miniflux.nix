@@ -43,6 +43,10 @@ in
           # Don't create an admin
           CREATE_ADMIN = 0;
 
+          # To prevent old entires from popping up if they change
+          FILTER_ENTRY_MAX_AGE_DAYS = 14;
+          CLEANUP_ARCHIVE_READ_DAYS = 7;
+
           # Disable local auth option, just use OAuth2
           DISABLE_LOCAL_AUTH = 1;
 

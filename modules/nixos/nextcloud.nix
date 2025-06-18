@@ -152,6 +152,8 @@ in
         wopi_allowlist = lib.concatStringsSep "," [
           "127.0.0.1"
           "::1"
+          # Needed to add the tailscale IP, so just doing the whole subnet
+          "100.64.0.0/10"
         ];
       in
       {
