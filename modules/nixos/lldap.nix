@@ -32,16 +32,6 @@ in
             proxyPass = "http://127.0.0.1:17170";
           };
         };
-        # To expose ldap protocol outside of the server
-      #   streamConfig = ''
-      #     server {
-      #       listen 6360 ssl;
-      #       proxy_pass 127.0.0.1:6360;
-
-      #       ssl_certificate /var/lib/acme/${cfg.domainName}/cert.pem;
-      #       ssl_certificate_key /var/lib/acme/${cfg.domainName}/key.pem;
-      #      }
-      #   '';
       };
 
       lldap = {
