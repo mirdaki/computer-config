@@ -5,6 +5,7 @@
     ./acme.nix
     ./authelia-nginx.nix
     ./authelia.nix
+    ./calibre-web-automated.nix
     ./firewall.nix
     ./flame.nix
     ./foundryvtt-router.nix
