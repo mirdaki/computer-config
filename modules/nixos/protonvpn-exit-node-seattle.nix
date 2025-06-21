@@ -6,6 +6,9 @@
 # https://net.codecaptured.com:443/oidc/register/nodekey:XXXXX
 # 3. Then to make it useable, see these headscale instructions
 # https://headscale.net/stable/ref/exit-node/#on-the-control-server
+# ---
+# These steps did not help for refreshing. I had to disable the auth key param and check the logs for the URL to sign in. Then very quickly sign in before it retries
+# TODO: Figure out a better method here
 
 # References
 # - https://lemmy.world/post/7281194
