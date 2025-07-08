@@ -1,5 +1,9 @@
 # Computer Config
 
+## Self-hosted Service Design
+
+![A diagram showing where services are running and how they connect](docs/diagram.png)
+
 ## NixOS Configuration
 
 To update the computer, run the below with the right profile (`#alderaan` below):
