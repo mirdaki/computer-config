@@ -1,7 +1,3 @@
-# If using OIDC for login, will need to run tailscale up command once to auth as that user, before this works without interaction
-
-# To get a preauth key from headscale https://headscale.net/usage/getting-started/#using-a-preauthkey
-
 {
   config,
   lib,
