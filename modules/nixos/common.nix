@@ -36,5 +36,6 @@
     ./uptime-kuma.nix
     ./user.nix
     ./vscode-remote-ssh.nix
+    ./wallabag.nix
   ];
 }
