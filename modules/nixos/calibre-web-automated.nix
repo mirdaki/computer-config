@@ -70,6 +70,8 @@ in
             proxyPass = "http://127.0.0.1:${builtins.toString cfg.port}";
           };
         };
+        # Support larger uploads for books
+        clientMaxBodySize = "500m";
       };
 
       # Create storage for actual media files
