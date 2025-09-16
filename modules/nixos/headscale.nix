@@ -51,10 +51,6 @@ in
             issuer = "https://auth.${cfg.baseDomainName}";
             client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
             client_secret_path = cfg.oidcSecretFile;
-            strip_email_domain = true;
-            # TODO: Only need to keep this until all users are migrated
-            # https://github.com/juanfont/headscale/releases/tag/v0.24.0
-            map_legacy_users = true;
           };
           # Complains if I don't add this
           ip_prefixes = [
