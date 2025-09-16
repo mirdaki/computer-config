@@ -20,6 +20,10 @@ in
     "flakes"
   ];
 
+  # Was running into buffer warnings, bumped to 500MB
+  # https://github.com/NixOS/nix/issues/11728
+  nix.settings.download-buffer-size = 524288000;
+
   nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "taris";
