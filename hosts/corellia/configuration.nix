@@ -101,7 +101,7 @@ in
   virtualisation.docker.enable = true;
 
   environment.systemPackages = [
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs-unstable.ghostty
   ];
 

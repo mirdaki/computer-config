@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-25-05,
   ...
 }:
 

@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-25-05,
   ...
 }:
 
@@ -37,6 +38,7 @@ in
 
       silverbullet = {
         enable = true;
+        package = pkgs-25-05.silverbullet;
         listenPort = 3003;
         spaceDir = cfg.dataDir;
         envFile = "/etc/silverbullet.env";
