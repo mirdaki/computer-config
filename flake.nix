@@ -45,6 +45,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/corellia/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
