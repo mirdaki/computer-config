@@ -213,6 +213,27 @@ in
     dataDir = "${mediaPath}/wallabag";
   };
 
+  forgejo = {
+    enable = true;
+    subDomainName = "git";
+    baseDomainName = internalDomainName;
+    certHostDomainName = internalDomainName;
+    authDomainName = "auth.${baseDomainName}";
+    dataDir = "${filesPath}/forgejo";
+    smtpEmail = "codecaptured@gmail.com";
+
+    smtpPasswordFile = config.sops.secrets."forgejo-smtp".path;
+    runnerSecretFile = config.sops.secrets."forgejo-runner".path;
+  };
+  sops.secrets.forgejo-smtp = {
+    sopsFile = ./secrets/forgejo-smtp.txt;
+    format = "binary";
+  };
+  sops.secrets.forgejo-runner = {
+    sopsFile = ./secrets/forgejo-runner.env;
+    format = "dotenv";
+  };
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #

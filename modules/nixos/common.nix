@@ -8,6 +8,7 @@
     ./calibre-web-automated.nix
     ./firewall.nix
     ./flame.nix
+    ./forgejo.nix
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix
@@ -16,8 +17,8 @@
     ./jellyfin.nix
     ./linode.nix
     ./lldap.nix
-    ./mealie.nix
     ./mealie-oidc.nix
+    ./mealie.nix
     ./miniflux-oidc.nix
     ./miniflux.nix
     ./namecheap-private-cert.nix
@@ -25,10 +26,10 @@
     ./nextcloud.nix
     ./nginx-recommended.nix
     ./ntfy.nix
+    ./postgresql.nix
     ./protonvpn-exit-node-losangeles.nix
     ./protonvpn-exit-node-miami.nix
     ./protonvpn-exit-node-seattle.nix
-    ./postgresql.nix
     ./security.nix
     ./silverbullet.nix
     ./ssh.nix
