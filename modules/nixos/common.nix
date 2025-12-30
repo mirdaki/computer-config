@@ -8,6 +8,7 @@
     ./calibre-web-automated.nix
     ./firewall.nix
     ./flame.nix
+    ./forgejo-oidc.nix
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix

@@ -156,6 +156,11 @@ in
     domainName = "home.internal.${baseDomainName}";
   };
 
+  forgejo-oidc = {
+    enable = true;
+    domainName = "git.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";
