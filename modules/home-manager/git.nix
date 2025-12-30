@@ -11,9 +11,11 @@ in
   config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
-      userName = "mirdaki";
-      userEmail = "mirdaki@users.noreply.github.com";
-      extraConfig = {
+      settings = {
+        user = {
+          name = "mirdaki";
+          email = "mirdaki@users.noreply.github.com";
+        };
         push = {
           autoSetupRemote = true;
         };

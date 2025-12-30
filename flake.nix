@@ -2,12 +2,13 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix.url = "github:Mic92/sops-nix";
     foundryvtt.url = "github:reckenrode/nix-foundryvtt/f1b401831d796dd94cf5a11b65fd169a199d4ff0";
@@ -17,6 +18,7 @@
     inputs@{
       nixpkgs,
       nixpkgs-unstable,
+      nixpkgs-25-05,
       home-manager,
       nixos-hardware,
       sops-nix,
@@ -43,6 +45,7 @@
               home-manager.useUserPackages = true;
               home-manager.users.matthew = import ./hosts/corellia/home.nix;
             }
+            foundryvtt.nixosModules.foundryvtt
           ];
         };
 
@@ -80,9 +83,12 @@
           ];
         };
 
-        bespin = nixpkgs.lib.nixosSystem {
+        bespin = nixpkgs.lib.nixosSystem rec {
           system = "x86_64-linux";
           specialArgs = {
+            pkgs-25-05 = import nixpkgs-25-05 {
+              inherit system;
+            };
             inherit foundryvtt;
           };
           modules = [

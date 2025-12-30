@@ -26,6 +26,7 @@
   home.packages = with pkgs; [
     cargo
     darktable
+    deno
     discord
     element-desktop
     gcc
@@ -34,8 +35,8 @@
     localsend
     nextcloud-client
     nixpkgs-fmt
-    nodejs_23
     protonvpn-gui
+    python312
     rustc
     silverbullet
     ungoogled-chromium

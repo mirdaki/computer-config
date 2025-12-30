@@ -58,11 +58,10 @@ in
 
   services.printing.enable = true;
 
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -70,6 +69,21 @@ in
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
+  # Software updates
+  system.autoUpgrade = {
+    enable = true;
+    flake = "../../flake.nix";
+    flags = [
+      "-L" # print build logs
+    ];
+    runGarbageCollection = true;
+    dates = "02:00";
+    randomizedDelaySec = "45min";
+  };
+
+  # Was running into issues with the download buffer being exceeded
+  nix.settings.download-buffer-size = 524288000; # 500MB
 
   # Other config
 
@@ -85,6 +99,21 @@ in
       "docker"
     ];
     shell = pkgs.nushell;
+
+    packages = with pkgs; [
+      # Setup flaktpak in software center
+      flatpak
+      gnome-software
+    ];
+  };
+
+  services.flatpak.enable = true;
+  systemd.services.flatpak-repo = {
+    wantedBy = [ "multi-user.target" ];
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    '';
   };
 
   services.fwupd.enable = true;
@@ -101,7 +130,7 @@ in
   virtualisation.docker.enable = true;
 
   environment.systemPackages = [
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs-unstable.ghostty
   ];
 

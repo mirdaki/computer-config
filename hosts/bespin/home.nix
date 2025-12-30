@@ -3,11 +3,13 @@
 {
   imports = [ ../../modules/home-manager/common.nix ];
 
-  git.enable = true;
-  cli-tools.enable = false;
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  # Common modules
+
+  cli-tools.enable = true;
+  git.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

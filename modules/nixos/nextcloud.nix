@@ -3,6 +3,8 @@
 
 # For collabora, needed to add public IP of server (via ping) to the allowlist in the Nextcloud admin UI
 
+# For recognize, had to set VM to do Host Passthrough for AVX support
+
 {
   lib,
   config,
@@ -51,7 +53,7 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud31;
+      package = pkgs.nextcloud32;
       hostName = "${cfg.subDomainName}.${cfg.baseDomainName}";
       https = true;
       datadir = cfg.dataDir;
@@ -107,8 +109,8 @@ in
           contacts
           gpoddersync
           memories
-          # TODO: Recognize fails to run due to a js error. Will try again with an update
-          # recognize
+          previewgenerator
+          recognize
           richdocuments
           user_oidc
           ;
