@@ -117,6 +117,14 @@ in
       };
     };
 
+    # Generate previews for new images
+    services.cron = {
+      enable = true;
+      systemCronJobs = [
+        "*/30 * * * *      root    nextcloud-occ preview:pre-generate >> /tmp/cron.log"
+      ];
+    };
+
     # From https://diogotc.com/blog/collabora-nextcloud-nixos/
     services.collabora-online = {
       enable = true;

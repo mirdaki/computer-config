@@ -191,13 +191,6 @@ in
     format = "binary";
   };
 
-  flame = {
-    enable = true;
-    domainName = "start.${internalDomainName}";
-    certHostDomainName = internalDomainName;
-    dataDir = "${filesPath}/flame";
-  };
-
   calibre-web-automated = {
     enable = true;
     domainName = "books.${internalDomainName}";
@@ -232,6 +225,12 @@ in
   sops.secrets.forgejo-runner = {
     sopsFile = ./secrets/forgejo-runner.env;
     format = "dotenv";
+  };
+
+  homepage = {
+    enable = true;
+    domainName = "start.${internalDomainName}";
+    certHostDomainName = internalDomainName;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
