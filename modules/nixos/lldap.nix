@@ -40,10 +40,11 @@ in
           ldap_base_dn = cfg.ldapBaseDN;
           http_url = "https://${cfg.domainName}";
           database_url = "postgresql:///lldap?host=/run/postgresql";
+          force_ldap_user_pass_reset = "always";
+          jwt_secret_file = cfg.jwtSecretFile;
+          ldap_user_pass_file = cfg.ldapUserPassFile;
         };
         environment = {
-          LLDAP_JWT_SECRET_FILE = cfg.jwtSecretFile;
-          LLDAP_LDAP_USER_PASS_FILE = cfg.ldapUserPassFile;
           LLDAP_LDAPS_OPTIONS__ENABLED = "true";
           LLDAP_LDAPS_OPTIONS__CERT_FILE = "/var/lib/acme/${cfg.domainName}/cert.pem";
           LLDAP_LDAPS_OPTIONS__KEY_FILE = "/var/lib/acme/${cfg.domainName}/key.pem";

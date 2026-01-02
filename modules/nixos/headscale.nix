@@ -51,6 +51,16 @@ in
             issuer = "https://auth.${cfg.baseDomainName}";
             client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
             client_secret_path = cfg.oidcSecretFile;
+            scope = [
+              "openid"
+              "profile"
+              "email"
+              "groups"
+            ];
+            pkce = {
+              enabled = true;
+              method = "S256";
+            };
           };
           # Complains if I don't add this
           ip_prefixes = [
@@ -60,11 +70,10 @@ in
         };
       };
 
-      # TODO: Temporary workaround until headscale is updated to match authelia
-      # https://headscale.net/stable/ref/oidc/#authelia
+      # Until Heascale has full OIDC 1.0 support, had to add escape hatch instructions https://www.authelia.com/integration/openid-connect/clients/headscale/#configuration-escape-hatch
       authelia.instances.main.settings.identity_providers.oidc.claims_policies."headscale".id_token = [
-        "groups"
         "email"
+        "groups"
         "email_verified"
         "alt_emails"
         "preferred_username"
@@ -76,14 +85,22 @@ in
           client_id = "6SlYc4QlKZZ3nfm27eOcCBwqIX2tiBoBr52Ur.eK2gWlab1BFEJ5McMoaxN1xEsZHXDjsvaR";
           client_name = "headscale";
           client_secret = "$pbkdf2-sha512$310000$Lk0.Ywno0TRsAcKgXwtMkA$qbtvBbeuLXIoWlC82nU9aGL.fKMhUpJd5l2/n4lRHWcp1pvBks/Zw2HsxOzlV5lTTnRzszclo0Y54GQvyyHtDw";
+          public = false;
           authorization_policy = "two_factor";
+          require_pkce = true;
+          pkce_challenge_method = "S256";
           redirect_uris = [ "https://${cfg.subDomainName}.${cfg.baseDomainName}:443/oidc/callback" ];
           scopes = [
             "openid"
-            "profile"
             "email"
-            "username"
+            "profile"
+            "groups"
           ];
+          response_types = [ "code" ];
+          grant_types = [ "authorization_code" ];
+          access_token_signed_response_alg = "none";
+          userinfo_signed_response_alg = "none";
+          token_endpoint_auth_method = "client_secret_basic";
           claims_policy = "headscale";
         }
       ];
