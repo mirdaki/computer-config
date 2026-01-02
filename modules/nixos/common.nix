@@ -7,13 +7,13 @@
     ./authelia.nix
     ./calibre-web-automated.nix
     ./firewall.nix
-    ./flame.nix
     ./forgejo-oidc.nix
     ./forgejo.nix
     ./foundryvtt-router.nix
     ./foundryvtt.nix
     ./headscale.nix
     ./home-assistant-oidc.nix
+    ./homepage.nix
     ./jellyfin-oidc.nix
     ./jellyfin.nix
     ./linode.nix
