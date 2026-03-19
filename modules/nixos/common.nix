@@ -27,6 +27,7 @@
     ./nextcloud.nix
     ./nginx-recommended.nix
     ./ntfy.nix
+    ./plymouth.nix
     ./postgresql.nix
     ./protonvpn-exit-node-losangeles.nix
     ./protonvpn-exit-node-miami.nix
