@@ -7,6 +7,7 @@
     ./authelia.nix
     ./calibre-web-automated.nix
     ./firewall.nix
+    ./flatpak.nix
     ./forgejo-oidc.nix
     ./forgejo.nix
     ./foundryvtt-router.nix

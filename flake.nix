@@ -12,6 +12,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     sops-nix.url = "github:Mic92/sops-nix";
     foundryvtt.url = "github:reckenrode/nix-foundryvtt/f1b401831d796dd94cf5a11b65fd169a199d4ff0";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
   };
 
   outputs =
@@ -23,6 +24,7 @@
       nixos-hardware,
       sops-nix,
       foundryvtt,
+      nix-flatpak,
       ...
     }:
     {
