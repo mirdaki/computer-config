@@ -35,6 +35,7 @@
     ./silverbullet.nix
     ./ssh.nix
     ./tailscale.nix
+    ./umami.nix
     ./uptime-kuma.nix
     ./user.nix
     ./vscode-remote-ssh.nix
