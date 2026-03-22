@@ -129,6 +129,15 @@ in
     baseDomainName = baseDomainName;
   };
 
+  umami = {
+    enable = true;
+    subDomainName = "analytics";
+    baseDomainName = baseDomainName;
+
+    appSecretFile = config.sops.secrets."umami/app-secret".path;
+  };
+  sops.secrets."umami/app-secret".owner = "umami";
+
   # Support for internal services
 
   nextcloud-oidc = {
