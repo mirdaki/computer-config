@@ -6,9 +6,9 @@
 }:
 
 let
+  hostName = "corellia";
   primaryUser = "matthew";
   baseDomainName = "codecaptured.com";
-  internalDomainName = "internal.${baseDomainName}";
 in
 {
   imports = [
@@ -16,116 +16,35 @@ in
     ../../modules/nixos/common.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  # System
-
-  nixpkgs.config.allowUnfree = true;
-
-  networking.hostName = "corellia";
-  time.timeZone = "America/Los_Angeles";
+  # Standard system settings
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices."luks-d4f044d7-81b1-4abe-a993-ed87bec2cb7d".device =
     "/dev/disk/by-uuid/d4f044d7-81b1-4abe-a993-ed87bec2cb7d";
 
-  networking.networkmanager.enable = true;
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  services.printing.enable = true;
-
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
-
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  # Software updates
-  system.autoUpgrade = {
-    enable = true;
-    flake = "../../flake.nix";
-    flags = [
-      "-L" # print build logs
-    ];
-    runGarbageCollection = true;
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-  };
-
-  # Was running into issues with the download buffer being exceeded
-  nix.settings.download-buffer-size = 524288000; # 500MB
-
-  # Other config
 
   sops.defaultSopsFile = ./secrets/secret.yaml;
   sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
 
-  users.users.${primaryUser} = {
-    isNormalUser = true;
-    description = primaryUser;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
+  # Custom modules
+
+  common-config = {
+    enable = true;
+    hostName = cfg.hostName;
+  };
+  common-workstation-config.enable = true;
+
+  user = {
+    enable = true;
+    name = primaryUser;
     shell = pkgs.nushell;
-
-    packages = with pkgs; [
-      # Setup flaktpak in software center
-      flatpak
-      gnome-software
-    ];
+    extraGroups = [ "docker" ];
   };
 
-  services.flatpak.enable = true;
-  systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    '';
-  };
-
-  services.fwupd.enable = true;
-  programs.bash.completion.enable = true;
-
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
-  # Software
+  plymouth.enable = true;
 
   virtualisation.docker.enable = true;
 
@@ -133,6 +52,13 @@ in
     pkgs.nixfmt
     pkgs-unstable.ghostty
   ];
+
+  flatpak = {
+    enable = true;
+    flatpakStore = pkgs.cosmic-store;
+  };
+
+  # Specific package settings
 
   tailscale = {
     enable = true;

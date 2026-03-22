@@ -7,6 +7,7 @@
 }:
 
 let
+  hostName = "bespin";
   primaryUser = "matthew";
   baseDomainName = "codecaptured.com";
   internalDomainName = "internal.${baseDomainName}";
@@ -19,10 +20,7 @@ in
     ../../modules/nixos/common.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  # Standard system settings
 
   fileSystems.${filesPath} = {
     device = "192.168.0.205:/mnt/data/files";
@@ -34,16 +32,6 @@ in
     fsType = "nfs";
   };
 
-  # General settings
-
-  networking.hostName = "bespin";
-
-  time.timeZone = "America/Los_Angeles";
-
-  networking.networkmanager.enable = true;
-
-  nixpkgs.config.allowUnfree = true;
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.configurationLimit = 100;
@@ -51,14 +39,21 @@ in
   sops.defaultSopsFile = ./secrets/secret.yaml;
   sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
 
+  sops.secrets."user/hashed-password" = { };
+  sops.secrets."user/hashed-password".neededForUsers = true;
+
   # Custom modules
 
-  user.enable = true;
-  user.name = primaryUser;
+  common-config = {
+    enable = true;
+    hostName = cfg.hostName;
+  };
 
-  sops.secrets."user/hashed-password" = { };
-  user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
-  sops.secrets."user/hashed-password".neededForUsers = true;
+  user = {
+    enable = true;
+    name = primaryUser;
+    hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
+  };
 
   ssh.enable = true;
   ssh.allowUsername = primaryUser;

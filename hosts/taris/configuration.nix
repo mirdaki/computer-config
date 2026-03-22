@@ -6,6 +6,7 @@
 }:
 
 let
+  hostName = "taris";
   primaryUser = "matthew";
   baseDomainName = "codecaptured.com";
 in
@@ -15,29 +16,26 @@ in
     ../../modules/nixos/common.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
-
-  # Was running into buffer warnings, bumped to 500MB
-  # https://github.com/NixOS/nix/issues/11728
-  nix.settings.download-buffer-size = 524288000;
-
-  nixpkgs.config.allowUnfree = true;
-
-  networking.hostName = "taris";
-  time.timeZone = "America/Los_Angeles";
+  # Standard system settings
 
   sops.defaultSopsFile = ./secrets/secret.yaml;
   sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
 
-  user.enable = true;
-  user.name = primaryUser;
-
   sops.secrets."user/hashed-password" = { };
-  user.hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   sops.secrets."user/hashed-password".neededForUsers = true;
+
+  # Custom modules
+
+  common-config = {
+    enable = true;
+    hostName = cfg.hostName;
+  };
+
+  user = {
+    enable = true;
+    name = primaryUser;
+    hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
+  };
 
   ssh.enable = true;
   ssh.allowUsername = primaryUser;
@@ -47,8 +45,6 @@ in
   security.enable = true;
 
   firewall.enable = true;
-
-  # Other config
 
   programs.bash.completion.enable = true;
 
