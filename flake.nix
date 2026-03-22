@@ -51,6 +51,33 @@
           ];
         };
 
+        mandalore = nixpkgs.lib.nixosSystem rec {
+          system = "x86_64-linux";
+          specialArgs = {
+            pkgs-unstable = import nixpkgs-unstable {
+              inherit system;
+            };
+          };
+          modules = [
+            ./hosts/mandalore/configuration.nix
+            sops-nix.nixosModules.sops
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-pc-ssd
+            nixos-hardware.nixosModules.common-gpu-intel
+            {
+              hardware.intelgpu.driver = "xe";
+            }
+            nix-flatpak.nixosModules.nix-flatpak
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.matthew = import ./hosts/mandalore/home.nix;
+            }
+            foundryvtt.nixosModules.foundryvtt
+          ];
+        };
+
         alderaan = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
