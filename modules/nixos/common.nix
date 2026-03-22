@@ -6,6 +6,8 @@
     ./authelia-nginx.nix
     ./authelia.nix
     ./calibre-web-automated.nix
+    ./common-config.nix
+    ./common-workstation-config.nix
     ./firewall.nix
     ./flatpak.nix
     ./forgejo-oidc.nix
