@@ -21,6 +21,7 @@
     ./jellyfin.nix
     ./linode.nix
     ./lldap.nix
+    ./manyfold.nix
     ./mealie-oidc.nix
     ./mealie.nix
     ./miniflux-oidc.nix

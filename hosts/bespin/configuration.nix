@@ -46,12 +46,13 @@ in
 
   common-config = {
     enable = true;
-    hostName = cfg.hostName;
+    hostName = hostName;
   };
 
   user = {
     enable = true;
     name = primaryUser;
+    enableSshKeys = true;
     hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   };
 
@@ -226,6 +227,23 @@ in
     enable = true;
     domainName = "start.${internalDomainName}";
     certHostDomainName = internalDomainName;
+  };
+
+  manyfold = {
+    enable = true;
+    subDomainName = "models";
+    baseDomainName = internalDomainName;
+    certHostDomainName = internalDomainName;
+    dataDir = "${filesPath}/manyfold";
+    authDomainName = "auth.${baseDomainName}";
+    oidcClientId = "ETcJYQcPP~W1dAGZIn1PY1t_WWN~DcAzZ-NZooqc~Q1ELHBmv-39lRERWGRVvNU.l5YY5GC5";
+
+    secretEnvFilePath = config.sops.secrets."manyfold-credentials".path;
+  };
+  sops.secrets."manyfold/secret-key-base".owner = "manyfold";
+  sops.secrets.manyfold-credentials = {
+    sopsFile = ./secrets/manyfold-credentials.env;
+    format = "dotenv";
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
