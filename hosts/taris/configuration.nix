@@ -28,12 +28,13 @@ in
 
   common-config = {
     enable = true;
-    hostName = cfg.hostName;
+    hostName = hostName;
   };
 
   user = {
     enable = true;
     name = primaryUser;
+    enableSshKeys = true;
     hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   };
 
@@ -164,6 +165,11 @@ in
   forgejo-oidc = {
     enable = true;
     domainName = "git.internal.${baseDomainName}";
+  };
+
+  manyfold-oidc = {
+    enable = true;
+    domainName = "models.internal.${baseDomainName}";
   };
 
   foundryvtt-router = {

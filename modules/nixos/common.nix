@@ -22,6 +22,7 @@
     ./linode.nix
     ./lldap.nix
     ./manyfold.nix
+    ./manyfold-oidc.nix
     ./mealie-oidc.nix
     ./mealie.nix
     ./miniflux-oidc.nix

@@ -31,13 +31,19 @@ in
         redirect_uris = [
           "https://${cfg.domainName}/sso/OID/redirect/authelia"
           "http://${cfg.domainName}/sso/OID/redirect/authelia"
-
         ];
         scopes = [
           "openid"
           "profile"
           "groups"
         ];
+        response_types = [
+          "code"
+        ];
+        grant_types = [
+          "authorization_code"
+        ];
+        access_token_signed_response_alg = "none";
         userinfo_signed_response_alg = "none";
         token_endpoint_auth_method = "client_secret_post";
       }
