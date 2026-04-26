@@ -17,6 +17,7 @@
     ./headscale.nix
     ./home-assistant-oidc.nix
     ./homepage.nix
+    ./hugo-site.nix
     ./jellyfin-oidc.nix
     ./jellyfin.nix
     ./linode.nix
