@@ -41,6 +41,7 @@
     ./security.nix
     ./silverbullet.nix
     ./ssh.nix
+    ./static-site.nix
     ./tailscale.nix
     ./umami.nix
     ./uptime-kuma.nix

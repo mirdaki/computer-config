@@ -135,6 +135,17 @@ in
   };
   sops.secrets."umami/app-secret".owner = "umami";
 
+  hugo-site = {
+    enable = true;
+    domainName = baseDomainName;
+  };
+
+  static-site = {
+    enable = true;
+    domainName = "matthewbooe.com";
+    indexPath = "src/index.html";
+  };
+
   # Support for internal services
 
   nextcloud-oidc = {
