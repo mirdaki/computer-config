@@ -45,6 +45,7 @@
     ./tailscale.nix
     ./umami.nix
     ./uptime-kuma.nix
+    ./urshort.nix
     ./user.nix
     ./vscode-remote-ssh.nix
     ./wallabag.nix

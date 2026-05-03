@@ -146,6 +146,25 @@ in
     indexPath = "src/index.html";
   };
 
+  urshort = {
+    enable = true;
+    domainName = "aka.tips";
+    standardMappings = {
+      theforce = "https://github.com/mirdaki/theforce";
+      theforceblog = "https://codecaptured.com/blog/i-made-a-star-wars-programming-language-called-the-force/";
+      urshort = "https://github.com/mirdaki/urshort";
+      blog = "https://codecaptured.com/";
+      me = "https://codecaptured.com/about/";
+      resume = "https://matthewbooe.com";
+    };
+    patternMappings = [
+      {
+        regex = "^p(?P<index>\\d+)$";
+        uri = "https://codecaptured.com/photography/$index";
+      }
+    ];
+  };
+
   # Support for internal services
 
   nextcloud-oidc = {
