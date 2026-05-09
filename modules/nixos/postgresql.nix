@@ -34,6 +34,7 @@ in
       identMap = ''
         # ArbitraryMapName systemUser DBUser
           superuser_map      root      postgres
+          superuser_map      root      manyfold # TODO: See if I can concat this from the manyfold nix. This is needed since podman is running with root
           superuser_map      postgres  postgres
           # Let other names login as themselves
           superuser_map      /^(.*)$   \1

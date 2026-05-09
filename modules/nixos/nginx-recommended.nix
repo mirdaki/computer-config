@@ -27,6 +27,10 @@ in
 
         # Only allow PFS-enabled ciphers with AES256
         sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+        # Support larger uploads for files for services such as:
+        # calibre-web-automated, forejo, manyfold
+        clientMaxBodySize = "512m";
     };
   };
 }

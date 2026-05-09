@@ -102,6 +102,7 @@
           modules = [
             ./hosts/taris/configuration.nix
             sops-nix.nixosModules.sops
+            nix-flatpak.nixosModules.nix-flatpak
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -123,6 +124,7 @@
           modules = [
             ./hosts/bespin/configuration.nix
             sops-nix.nixosModules.sops
+            nix-flatpak.nixosModules.nix-flatpak
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

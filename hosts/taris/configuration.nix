@@ -28,12 +28,13 @@ in
 
   common-config = {
     enable = true;
-    hostName = cfg.hostName;
+    hostName = hostName;
   };
 
   user = {
     enable = true;
     name = primaryUser;
+    enableSshKeys = true;
     hashedPasswordFile = config.sops.secrets."user/hashed-password".path;
   };
 
@@ -134,6 +135,36 @@ in
   };
   sops.secrets."umami/app-secret".owner = "umami";
 
+  hugo-site = {
+    enable = true;
+    domainName = baseDomainName;
+  };
+
+  static-site = {
+    enable = true;
+    domainName = "matthewbooe.com";
+    indexPath = "src/index.html";
+  };
+
+  urshort = {
+    enable = true;
+    domainName = "aka.tips";
+    standardMappings = {
+      theforce = "https://github.com/mirdaki/theforce";
+      theforceblog = "https://codecaptured.com/blog/i-made-a-star-wars-programming-language-called-the-force/";
+      urshort = "https://github.com/mirdaki/urshort";
+      blog = "https://codecaptured.com/";
+      me = "https://codecaptured.com/about/";
+      resume = "https://matthewbooe.com";
+    };
+    patternMappings = [
+      {
+        regex = "^p(?P<index>\\d+)$";
+        uri = "https://codecaptured.com/photography/$index";
+      }
+    ];
+  };
+
   # Support for internal services
 
   nextcloud-oidc = {
@@ -164,6 +195,11 @@ in
   forgejo-oidc = {
     enable = true;
     domainName = "git.internal.${baseDomainName}";
+  };
+
+  manyfold-oidc = {
+    enable = true;
+    domainName = "models.internal.${baseDomainName}";
   };
 
   foundryvtt-router = {

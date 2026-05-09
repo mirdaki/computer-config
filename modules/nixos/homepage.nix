@@ -1,3 +1,4 @@
+# Can find icons from this page https://gethomepage.dev/configs/services/#icons
 {
   pkgs,
   lib,
@@ -123,6 +124,14 @@ in
                 href = "https://vtt.codecaptured.com";
                 siteMonitor = "https://vtt.codecaptured.com";
                 icon = "sh-foundry-virtual-tabletop";
+              };
+            }
+            {
+              "Models" = {
+                description = "Models for 3D Printing";
+                href = "https://models.internal.codecaptured.com";
+                siteMonitor = "https://models.internal.codecaptured.com";
+                icon = "sh-manyfold";
               };
             }
           ];
