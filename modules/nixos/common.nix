@@ -6,6 +6,7 @@
     ./authelia-nginx.nix
     ./authelia.nix
     ./calibre-web-automated.nix
+    ./calibre-web-automated-oidc.nix
     ./common-config.nix
     ./common-workstation-config.nix
     ./firewall.nix

@@ -202,6 +202,11 @@ in
     domainName = "models.internal.${baseDomainName}";
   };
 
+  calibre-web-automated-oidc = {
+    enable = true;
+    domainName = "books.internal.${baseDomainName}";
+  };
+
   foundryvtt-router = {
     enable = true;
     domainName = "vtt.${baseDomainName}";
