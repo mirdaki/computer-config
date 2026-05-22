@@ -17,11 +17,13 @@
     ./headscale.nix
     ./home-assistant-oidc.nix
     ./homepage.nix
+    ./hugo-site.nix
     ./jellyfin-oidc.nix
     ./jellyfin.nix
     ./linode.nix
     ./lldap.nix
     ./manyfold.nix
+    ./manyfold-oidc.nix
     ./mealie-oidc.nix
     ./mealie.nix
     ./miniflux-oidc.nix
@@ -39,9 +41,11 @@
     ./security.nix
     ./silverbullet.nix
     ./ssh.nix
+    ./static-site.nix
     ./tailscale.nix
     ./umami.nix
     ./uptime-kuma.nix
+    ./urshort.nix
     ./user.nix
     ./vscode-remote-ssh.nix
     ./wallabag.nix
