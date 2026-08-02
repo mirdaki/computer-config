@@ -92,6 +92,31 @@
     };
   };
 
+  xdg.autostart = {
+    enable = true;
+    entries = [
+      (pkgs.writeText "protonvpn.desktop" ''
+        [Desktop Entry]
+        Type=Application
+        Name=ProtonVPN
+        Exec=${pkgs.proton-vpn}/bin/protonvpn-app
+        X-GNOME-Autostart-enabled=true
+      '')
+      (pkgs.writeText "element.desktop" ''
+        [Desktop Entry]
+        Type=Application
+        Name=Element
+        Exec=${pkgs.element-desktop}/bin/element-desktop
+      '')
+      (pkgs.writeText "discord.desktop" ''
+        [Desktop Entry]
+        Type=Application
+        Name=Discord
+        Exec=${pkgs.discord}/bin/discord
+      '')
+    ];
+  };
+
   # Custom modules
   git.enable = true;
   cli-tools.enable = true;
