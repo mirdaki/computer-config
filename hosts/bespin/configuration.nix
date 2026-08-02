@@ -81,27 +81,6 @@ in
 
   sops.secrets."protonvpn-exit-node/wireguard-private-key".owner = "root";
 
-  protonvpn-exit-node-seattle = {
-    enable = true;
-    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
-    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".path;
-  };
-  sops.secrets."protonvpn-exit-node/seattle/tailscale-auth-key".owner = "root";
-
-  protonvpn-exit-node-losangeles = {
-    enable = true;
-    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
-    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".path;
-  };
-  sops.secrets."protonvpn-exit-node/losangeles/tailscale-auth-key".owner = "root";
-
-  protonvpn-exit-node-miami = {
-    enable = true;
-    wireguardPrivateKeyFile = config.sops.secrets."protonvpn-exit-node/wireguard-private-key".path;
-    tailscaleAuthKeyFile = config.sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".path;
-  };
-  sops.secrets."protonvpn-exit-node/miami/tailscale-auth-key".owner = "root";
-
   namecheap-private-cert = {
     enable = true;
     domainName = internalDomainName;
