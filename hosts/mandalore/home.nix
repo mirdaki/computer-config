@@ -21,7 +21,6 @@
     gimp
     gnome-system-monitor
     inkscape
-    intel-gpu-tools
     libreoffice
     localsend
     nixfmt
@@ -45,6 +44,7 @@
     opencode = {
       enable = true;
       settings = {
+        model = "ollama/qwen3.6:27b-q4_K_M";
         provider = {
           ollama = {
             npm = "@ai-sdk/openai-compatible";
@@ -53,9 +53,21 @@
               baseURL = "http://localhost:11434/v1";
             };
             models = {
-              "llama3.1:8b" = {
-                name = "llama3.1:8b";
+              "qwen3.6:27b-q4_K_M" = {
+                name = "qwen3.6:27b";
               };
+              "qwen3.6:27b-mtp-q8_0" = {
+                name = "qwen3.6:27b-mtp";
+              };
+              # "qwen3.6:35b-a3b" = {
+              #   name = "qwen3.6:35b-a3b-q4_K_M";
+              # };
+              "gemma4:31b-it-q4_K_M" = {
+                name = "gemma4:31b";
+              };
+              # "gemma4:26b-a4b-it-q4_K_M" = {
+              #   name = "gemma4:26b";
+              # };
             };
           };
         };

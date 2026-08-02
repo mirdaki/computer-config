@@ -26,13 +26,13 @@ in
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
 
-  # Intel Arc Setup
-
-  # https://wiki.nixos.org/wiki/Intel_Graphics
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD"; # Prefer the modern iHD backend
-  };
-
+  # Hardware
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.open = true;
+  # Trying to fix the blank on resume/restart
+  hardware.nvidia.modesetting.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
   # May help if FFmpeg/VAAPI/QSV init fails (esp. on Arc with i915):
   hardware.enableRedistributableFirmware = true;
 
@@ -64,6 +64,43 @@ in
 
   # TODO: Consider updating the module to be more configurable to not need the keys
   # or consider making a tailscale client module that supports the systray
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkgs-unstable:
+    builtins.elem (lib.getName pkgs-unstable) [
+      # Add additional package names here
+      "ollama-cuda"
+    ];
+
+  services.ollama = {
+    enable = true;
+    # Optional: preload models, see https://ollama.com/library
+    loadModels = [
+      "qwen3.6:27b-q4_K_M"
+      "qwen3.6:27b-mtp-q8_0"
+      # "qwen3.6:35b-a3b-q4_K_M"
+      "gemma4:31b-it-q4_K_M"
+      # "gemma4:26b-a4b-it-q4_K_M"
+    ];
+    package = pkgs-unstable.ollama-cuda;
+    environmentVariables = {
+      OLLAMA_CONTEXT_LENGTH = "64000";
+    };
+  };
+  services.open-webui.enable = true;
+
+  # Set the power limit lower, since it's only a ~8% drop
+  systemd.services.nvidia-power-limit = {
+    description = "Set NVIDIA GPU power limit";
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "nvidia-persistenced.service" ];
+    after = [ "nvidia-persistenced.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${lib.getExe' config.hardware.nvidia.package "nvidia-smi"} -pl 250";
+    };
+  };
+
   services = {
     tailscale = {
       enable = true;
