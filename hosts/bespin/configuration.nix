@@ -98,6 +98,11 @@ in
     backupDataDir = "${filesPath}/backup/postgresql";
   };
 
+  postgresql-upgrade = {
+    enable = true;
+    dataDir = "${filesPath}/postgresql";
+  };
+
   nextcloud = {
     enable = true;
     baseDomainName = internalDomainName;
