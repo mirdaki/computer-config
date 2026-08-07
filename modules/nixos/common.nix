@@ -36,6 +36,7 @@
     ./ntfy.nix
     ./plymouth.nix
     ./postgresql.nix
+    ./postgresql-upgrade.nix
     ./protonvpn-exit-node-losangeles.nix
     ./protonvpn-exit-node-miami.nix
     ./protonvpn-exit-node-seattle.nix

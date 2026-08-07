@@ -26,7 +26,7 @@ in
   config = lib.mkIf cfg.enable {
     services.postgresql = {
       enable = true;
-      package = pkgs.postgresql_15;
+      package = pkgs.postgresql_16;
       dataDir = cfg.dataDir;
 
       # Limit which system users can log in as which DB user
@@ -43,7 +43,9 @@ in
       # https://nixos.wiki/wiki/PostgreSQL#Limit_Access
       authentication = pkgs.lib.mkOverride 10 ''
         #type database  DBuser  auth-method optional_ident_map
-        local sameuser  all     peer        map=superuser_map
+        # Allow postgres maintenance connections.
+        local all       postgres peer   map=superuser_map
+        local sameuser  all      peer   map=superuser_map
       '';
     };
 

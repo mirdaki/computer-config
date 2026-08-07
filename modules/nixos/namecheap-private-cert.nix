@@ -30,7 +30,7 @@ in
         # Ran into issues with the check never succeeding, even though the records were created
         # False fixed it then, but in other cases I needed true. Leaving it that way for now
         dnsPropagationCheck = true;
-        credentialsFile = cfg.credentialsFile;
+        credentialFiles."NAMECHEAP_API_KEY_FILE" = cfg.credentialsFile;
       };
     };
 

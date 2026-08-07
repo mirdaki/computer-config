@@ -149,8 +149,8 @@ in
             {
               "Miniflux" = {
                 description = "RSS Reader";
-                href = "https://read.internal.codecaptured.com";
-                siteMonitor = "https://read.internal.codecaptured.com";
+                href = "https://reader.internal.codecaptured.com";
+                siteMonitor = "https://reader.internal.codecaptured.com";
                 icon = "sh-miniflux";
               };
             }
