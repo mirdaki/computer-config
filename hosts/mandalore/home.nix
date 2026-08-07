@@ -1,6 +1,8 @@
 {
   config,
   pkgs,
+  inputs,
+  lib,
   ...
 }:
 
@@ -15,30 +17,61 @@
 
   # Packages
   home.packages = with pkgs; [
+    baobab
+    blender
     darktable
     discord
     element-desktop
+    freecad
     gimp
-    gnome-system-monitor
+    gnome-disk-utility
+    gnome-screenshot
+    harper
+    # hunspell dictionaries for libreoffice and others
+    hunspell
+    hunspellDicts.en-us
     inkscape
     libreoffice
     localsend
+    loupe
+    mission-center
     nixfmt
-    protonvpn-gui
+    papers
+    proton-vpn
     prusa-slicer
-    steam
+    resources
+    showtime
     ungoogled-chromium
     vlc
     vscode.fhs
+    yubikey-manager
+    gnupg
+    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   programs = {
     firefox = {
       enable = true;
+      # Set because of a `home.stateVersion` is less than "26.05" migration
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
     };
 
     zed-editor = {
       enable = true;
+      userSettings = {
+        # Enable debugging on NixOS
+        dap = {
+          CodeLLDB = {
+            binary = lib.getExe' pkgs.lldb "lldb-dap";
+          };
+        };
+      };
+    };
+
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+      enableNushellIntegration = true;
     };
 
     opencode = {

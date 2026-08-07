@@ -2,6 +2,7 @@
   config,
   pkgs,
   pkgs-unstable,
+  lib,
   ...
 }:
 
@@ -62,8 +63,7 @@ in
 
   # Specific package settings
 
-  # TODO: Consider updating the module to be more configurable to not need the keys
-  # or consider making a tailscale client module that supports the systray
+  programs.steam.enable = true;
 
   nixpkgs.config.allowUnfreePredicate =
     pkgs-unstable:
@@ -105,6 +105,8 @@ in
     tailscale = {
       enable = true;
       extraUpFlags = [ "--login-server=https://net.${baseDomainName}" ];
+      # Allows the systray to funciton
+      extraSetFlags = [ "--operator=${primaryUser}" ];
     };
   };
 

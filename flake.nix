@@ -2,10 +2,10 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-25-05.url = "github:nixos/nixpkgs/nixos-25.05";
@@ -13,6 +13,10 @@
     sops-nix.url = "github:Mic92/sops-nix";
     foundryvtt.url = "github:reckenrode/nix-foundryvtt/f1b401831d796dd94cf5a11b65fd169a199d4ff0";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.7.0";
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -25,6 +29,7 @@
       sops-nix,
       foundryvtt,
       nix-flatpak,
+      zen-browser,
       ...
     }:
     {
@@ -56,6 +61,7 @@
           specialArgs = {
             pkgs-unstable = import nixpkgs-unstable {
               inherit system;
+              config.allowUnfree = true;
             };
           };
           modules = [
@@ -68,6 +74,9 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+              };
               home-manager.users.matthew = import ./hosts/mandalore/home.nix;
             }
             foundryvtt.nixosModules.foundryvtt
