@@ -24,8 +24,7 @@ in
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
 
   # Hardware
   hardware.graphics.enable = true;
@@ -33,9 +32,10 @@ in
   hardware.nvidia.open = true;
   # Trying to fix the blank on resume/restart
   hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.powerManagement.enable = true;
-  # May help if FFmpeg/VAAPI/QSV init fails (esp. on Arc with i915):
-  hardware.enableRedistributableFirmware = true;
+  powerManagement.enable = true;
+
+  services.desktopManager.cosmic.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
 
   # Resolve a Cosmic and Gnome bug https://discourse.nixos.org/t/graphics-glitches-in-gnome-apps/73442/2
   hardware.graphics.package = pkgs-unstable.mesa;
