@@ -10,31 +10,26 @@
 }:
 
 {
-  imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+  imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
 
   boot.initrd.availableKernelModules = [
+    "ata_piix"
     "xhci_pci"
     "ahci"
-    "nvme"
-    "usbhid"
     "sd_mod"
+    "sr_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
-    device = "/dev/mapper/luks-fd26bfa8-7d67-441f-83fd-9391a2da3565";
+    device = "/dev/disk/by-uuid/792dc3fb-046e-42e5-a03f-966447381b74";
     fsType = "ext4";
   };
 
-  boot.initrd.luks.devices."luks-fd26bfa8-7d67-441f-83fd-9391a2da3565".device =
-    "/dev/disk/by-uuid/fd26bfa8-7d67-441f-83fd-9391a2da3565";
-
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B7F3-066E";
+    device = "/dev/disk/by-uuid/0744-D7BC";
     fsType = "vfat";
     options = [
       "fmask=0077"
@@ -42,8 +37,15 @@
     ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/4ccf3011-ff43-45f7-b281-ad1284e9bbea"; } ];
+  swapDevices = [ { device = "/dev/disk/by-uuid/e269866b-3493-44df-8f7a-d4a8609c9674"; } ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.ens3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
