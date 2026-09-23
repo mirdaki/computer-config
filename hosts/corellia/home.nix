@@ -13,9 +13,6 @@
   home.username = "matthew";
   home.homeDirectory = "/home/matthew";
 
-  gnome.enable = true;
-  gnome-extensions.enable = true;
-
   # Common modules
 
   git.enable = true;
@@ -47,6 +44,10 @@
 
   programs = {
     firefox = {
+      enable = true;
+    };
+
+    zed-editor = {
       enable = true;
     };
   };

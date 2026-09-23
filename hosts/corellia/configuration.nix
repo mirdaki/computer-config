@@ -23,17 +23,17 @@ in
   boot.initrd.luks.devices."luks-d4f044d7-81b1-4abe-a993-ed87bec2cb7d".device =
     "/dev/disk/by-uuid/d4f044d7-81b1-4abe-a993-ed87bec2cb7d";
 
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-
   sops.defaultSopsFile = ./secrets/secret.yaml;
   sops.age.keyFile = "/home/${primaryUser}/.config/sops/age/keys.txt";
+
+  # DMS section
+  dms.enable = true;
 
   # Custom modules
 
   common-config = {
     enable = true;
-    hostName = cfg.hostName;
+    hostName = hostName;
   };
   common-workstation-config.enable = true;
 

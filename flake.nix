@@ -46,6 +46,7 @@
             ./hosts/corellia/configuration.nix
             sops-nix.nixosModules.sops
             nixos-hardware.nixosModules.dell-xps-13-9370
+            nix-flatpak.nixosModules.nix-flatpak
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;

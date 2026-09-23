@@ -9,6 +9,7 @@
     ./calibre-web-automated-oidc.nix
     ./common-config.nix
     ./common-workstation-config.nix
+    ./dms.nix
     ./firewall.nix
     ./flatpak.nix
     ./forgejo-oidc.nix
