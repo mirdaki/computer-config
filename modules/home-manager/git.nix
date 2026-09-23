@@ -6,6 +6,8 @@ in
 {
   options = {
     git.enable = lib.mkEnableOption "enable git module";
+
+    git.gpgKeyId = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -13,8 +15,8 @@ in
       enable = true;
       settings = {
         user = {
-          name = "mirdaki";
-          email = "mirdaki@users.noreply.github.com";
+          name = "Matthew Booe";
+          email = "dev@boowho.me";
         };
         push = {
           autoSetupRemote = true;
@@ -22,6 +24,12 @@ in
         pull = {
           rebase = false;
         };
+      };
+      signing = {
+        format = "openpgp";
+        key = cfg.gpgKeyId;
+        # TODO: Need to think on if this makes sense for my workflow
+        # signByDefault = true;
       };
     };
   };

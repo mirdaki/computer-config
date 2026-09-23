@@ -6,5 +6,6 @@
     ./git.nix
     ./gnome.nix
     ./gnome-extensions.nix
+    ./gpg.nix
   ];
 }
