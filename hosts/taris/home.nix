@@ -3,7 +3,10 @@
 {
   imports = [ ../../modules/home-manager/common.nix ];
 
-  git.enable = true;
+  git = {
+    enable = true;
+    gpgKeyId = "6D73CF87592E8307";
+  };
   cli-tools.enable = false;
 
   # Let Home Manager install and manage itself.
