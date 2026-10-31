@@ -20,6 +20,7 @@ in
 
     namecheap-private-cert.domainName = lib.mkOption { type = lib.types.str; };
     namecheap-private-cert.credentialsFile = lib.mkOption { type = lib.types.str; };
+    namecheap-private-cert.userFile = lib.mkOption { type = lib.types.str; };
   };
 
   config = lib.mkIf cfg.enable {
@@ -30,7 +31,10 @@ in
         # Ran into issues with the check never succeeding, even though the records were created
         # False fixed it then, but in other cases I needed true. Leaving it that way for now
         dnsPropagationCheck = true;
-        credentialFiles."NAMECHEAP_API_KEY_FILE" = cfg.credentialsFile;
+        credentialFiles = {
+          "NAMECHEAP_API_KEY_FILE" = cfg.credentialsFile;
+          "NAMECHEAP_API_USER_FILE" = cfg.userFile;
+        };
       };
     };
 

@@ -85,10 +85,16 @@ in
     enable = true;
     domainName = internalDomainName;
     credentialsFile = config.sops.secrets."namecheap-credentials".path;
+    userFile = config.sops.secrets."namecheap-user".path;
   };
   sops.secrets."namecheap-credentials".owner = "acme";
   sops.secrets.namecheap-credentials = {
     sopsFile = ./secrets/namecheap-credentials.txt;
+    format = "binary";
+  };
+  sops.secrets."namecheap-user".owner = "acme";
+  sops.secrets.namecheap-user = {
+    sopsFile = ./secrets/namecheap-user.txt;
     format = "binary";
   };
 

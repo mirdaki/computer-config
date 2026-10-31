@@ -205,14 +205,6 @@ in
         {
           "Other Apps" = [
             {
-              Chat = [
-                {
-                  href = "https://element.boowho.me/";
-                  icon = "mdi-message-text";
-                }
-              ];
-            }
-            {
               Analytics = [
                 {
                   href = "https://analytics.codecaptured.com";
