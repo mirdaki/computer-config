@@ -91,7 +91,7 @@ in
     # Containers
     virtualisation.oci-containers.containers."manyfold-app" = {
       # The manyfold-solo image doesn't expect Redis
-      image = "ghcr.io/manyfold3d/manyfold-solo:0.147.1";
+      image = "ghcr.io/manyfold3d/manyfold-solo:0.153.0";
       environment = {
         # It had issues parsing the host path with '/'
         DATABASE_URL = "postgresql://manyfold@%2Fvar%2Fpostgresql/manyfold";

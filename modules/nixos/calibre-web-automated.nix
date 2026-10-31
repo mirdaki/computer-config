@@ -100,7 +100,7 @@ in
 
       # Containers
       virtualisation.oci-containers.containers."calibre-web-automated" = {
-        image = "ghcr.io/crocodilestick/calibre-web-automated:V4.0.6";
+        image = "ghcr.io/crocodilestick/calibre-web-automated:V4.0.8";
         environment = {
           "PGID" = "1000";
           "PUID" = "1000";
