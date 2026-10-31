@@ -10,6 +10,8 @@ let
   hostName = "mandalore";
   primaryUser = "matthew";
   baseDomainName = "codecaptured.com";
+  filesPath = "/mnt/files";
+  mediaPath = "/mnt/media";
 in
 {
   imports = [
@@ -19,26 +21,54 @@ in
 
   # Standard system settings
 
+  # TODO: Can't write in subdirectories,
+  fileSystems.${filesPath} = {
+    device = "192.168.0.205:/mnt/data/files";
+    fsType = "nfs";
+    # Wait till access to mount
+    options = [
+      "x-systemd.automount"
+      "noauto"
+    ];
+  };
+
+  fileSystems.${mediaPath} = {
+    device = "192.168.0.205:/mnt/data/media";
+    fsType = "nfs";
+    # Wait till access to mount
+    options = [
+      "x-systemd.automount"
+      "noauto"
+    ];
+  };
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Enable mounting Window's drive
+  # TODO: Drive decryption doesn't seem to be working
+  boot.supportedFilesystems = [ "ntfs" ];
 
+  # Graphic hardware
   boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
-
-  # Hardware
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.open = true;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.new_feature;
   # Trying to fix the blank on resume/restart
   hardware.nvidia.modesetting.enable = true;
   powerManagement.enable = true;
+  hardware.nvidia.powerManagement.enable = true;
 
   services.desktopManager.cosmic.enable = true;
   services.displayManager.cosmic-greeter.enable = true;
 
-  # Resolve a Cosmic and Gnome bug https://discourse.nixos.org/t/graphics-glitches-in-gnome-apps/73442/2
-  hardware.graphics.package = pkgs-unstable.mesa;
+  # Yubikey
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.pcscd.enable = true;
+  programs.yubikey-touch-detector = {
+    enable = true;
+  };
 
   # Custom modules
 
@@ -51,8 +81,12 @@ in
   user = {
     enable = true;
     name = primaryUser;
+    enableSshKeys = true;
     shell = pkgs.nushell;
   };
+
+  ssh.enable = true;
+  ssh.allowUsername = primaryUser;
 
   plymouth.enable = true;
 
@@ -76,15 +110,13 @@ in
     enable = true;
     # Optional: preload models, see https://ollama.com/library
     loadModels = [
-      "qwen3.6:27b-q4_K_M"
-      "qwen3.6:27b-mtp-q8_0"
-      # "qwen3.6:35b-a3b-q4_K_M"
+      "qwen3.8:27b-mtp-q4_K_M"
+      "qwen3.8:27b-mtp-q8_0"
       "gemma4:31b-it-q4_K_M"
-      # "gemma4:26b-a4b-it-q4_K_M"
     ];
     package = pkgs-unstable.ollama-cuda;
     environmentVariables = {
-      OLLAMA_CONTEXT_LENGTH = "64000";
+      OLLAMA_CONTEXT_LENGTH = "128000";
     };
   };
   services.open-webui.enable = true;
@@ -93,8 +125,6 @@ in
   systemd.services.nvidia-power-limit = {
     description = "Set NVIDIA GPU power limit";
     wantedBy = [ "multi-user.target" ];
-    requires = [ "nvidia-persistenced.service" ];
-    after = [ "nvidia-persistenced.service" ];
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${lib.getExe' config.hardware.nvidia.package "nvidia-smi"} -pl 250";

@@ -38,18 +38,26 @@ in
          algorithm: "fuzzy"    # prefix or fuzzy
          external: {
          # set to false to prevent nushell looking into $env.PATH to find more suggestions
-             enable: true 
+             enable: true
          # set to lower can improve completion performance at the cost of omitting some options
-             max_results: 100 
-             completer: $carapace_completer # check 'carapace_completer' 
+             max_results: 100
+             completer: $carapace_completer # check 'carapace_completer'
            }
          }
-        } 
-        $env.PATH = ($env.PATH | 
+        }
+        $env.PATH = ($env.PATH |
         split row (char esep) |
         prepend /home/myuser/.apps |
         append /usr/bin/env
         )
+
+        # TODO: Get auto GPG info working
+        # $env.GPG_TTY = (tty)
+        # $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/gnupg/S.gpg-agent.ssh"
+        # ^gpg-connect-agent updatestartuptty /bye | ignore
+
+        # Trying the As a service approach
+        # $env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent.socket"
       '';
       shellAliases = {
         vi = "hx";
