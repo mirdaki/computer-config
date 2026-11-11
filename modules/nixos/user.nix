@@ -52,6 +52,7 @@ in
         openssh.authorizedKeys.keyFiles = lib.mkIf cfg.enableSshKeys [
           ../../modules/nixos/ssh-keys/mandalore/id_rsa.pub
           ../../modules/nixos/ssh-keys/corellia/id_rsa.pub
+          ../../modules/nixos/ssh-keys/lothal/id_ed25519.pub
         ];
       }
       # This merges attribute sets
