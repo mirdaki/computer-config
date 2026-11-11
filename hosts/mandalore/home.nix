@@ -23,19 +23,23 @@
     discord
     element-desktop
     freecad
+    fresh-editor
     gimp
     gnome-disk-utility
     gnome-screenshot
+    gnupg
     harper
-    # hunspell dictionaries for libreoffice and others
     hunspell
     hunspellDicts.en-us
     inkscape
+    inputs.zen-browser.packages.${pkgs.system}.default
     libreoffice
+    lm_sensors
     localsend
     loupe
     mission-center
     nixfmt
+    nixos-option
     papers
     proton-vpn
     prusa-slicer
@@ -45,8 +49,6 @@
     vlc
     vscode.fhs
     yubikey-manager
-    gnupg
-    inputs.zen-browser.packages.${pkgs.system}.default
   ];
 
   programs = {
@@ -77,7 +79,7 @@
     opencode = {
       enable = true;
       settings = {
-        model = "ollama/qwen3.6:27b-q4_K_M";
+        model = "ollama/qwen3.8:27b-mtp-q4_K_M";
         provider = {
           ollama = {
             npm = "@ai-sdk/openai-compatible";
@@ -86,21 +88,19 @@
               baseURL = "http://localhost:11434/v1";
             };
             models = {
-              "qwen3.6:27b-q4_K_M" = {
-                name = "qwen3.6:27b";
+              "qwen3.8:27b-mtp-q4_K_M" = {
+                variants = {
+                  "qwen3.8:27b-mtp-reason" = {
+                    reasoningEffort = "xhigh";
+                  };
+                  "qwen3.8:27b-mtp" = {
+                    reasoningEffort = "medium";
+                  };
+                };
               };
-              "qwen3.6:27b-mtp-q8_0" = {
-                name = "qwen3.6:27b-mtp";
-              };
-              # "qwen3.6:35b-a3b" = {
-              #   name = "qwen3.6:35b-a3b-q4_K_M";
-              # };
               "gemma4:31b-it-q4_K_M" = {
                 name = "gemma4:31b";
               };
-              # "gemma4:26b-a4b-it-q4_K_M" = {
-              #   name = "gemma4:26b";
-              # };
             };
           };
         };
@@ -109,7 +109,6 @@
   };
 
   services = {
-    # TODO: Systray seems to have permission issues, needs tweaking
     tailscale-systray.enable = true;
 
     nextcloud-client = {
@@ -151,8 +150,12 @@
   };
 
   # Custom modules
-  git.enable = true;
+  git = {
+    enable = true;
+    gpgKeyId = "6D73CF87592E8307";
+  };
   cli-tools.enable = true;
+  gpg.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

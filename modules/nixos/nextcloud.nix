@@ -53,7 +53,7 @@ in
 
     services.nextcloud = {
       enable = true;
-      package = pkgs.nextcloud33;
+      package = pkgs.nextcloud34;
       hostName = "${cfg.subDomainName}.${cfg.baseDomainName}";
       https = true;
       datadir = cfg.dataDir;

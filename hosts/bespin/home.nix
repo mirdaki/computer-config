@@ -9,7 +9,10 @@
   # Common modules
 
   cli-tools.enable = true;
-  git.enable = true;
+  git = {
+    enable = true;
+    gpgKeyId = "6D73CF87592E8307";
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

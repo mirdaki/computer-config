@@ -22,7 +22,6 @@ in
       {
         client_name = "Mealie";
         client_id = "KjX1OEL6sYK0zdeGdCJgoIKZ7tFdjFXvtA852RjPi4mDSD0F5ZUWpAvz8N0rKiPiwmqO";
-        
         client_secret = "$pbkdf2-sha512$310000$znSUqyoV0PV7ag5LVmIHUA$o11jQ.IUn/il7aG7R39cBOxrvonNNHKE607W1XLfdcHmG7lvtFflqnYYQ7fLB/9I1JUBYtxQYMzNYTM81Seudg";
         public = false;
         # Mealie itself restricts to mealie_admin and mealie_user
@@ -36,6 +35,8 @@ in
           "email"
           "groups"
         ];
+        response_types = [ "code" ];
+        grant_types = [ "authorization_code" ];
         userinfo_signed_response_alg = "none";
         token_endpoint_auth_method = "client_secret_basic";
       }

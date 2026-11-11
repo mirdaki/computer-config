@@ -39,7 +39,6 @@ in
           locations."/" = {
             extraConfig = ''
               ## Headers
-              proxy_set_header Host $host;
               proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
               proxy_set_header X-Forwarded-Proto $scheme;
               proxy_set_header X-Forwarded-Host $http_host;

@@ -38,6 +38,7 @@ in
         enable = true;
         port = 9000;
         settings = {
+          BASE_URL = "https://${cfg.subDomainName}.${cfg.baseDomainName}";
           DB_ENGINE = "postgres";
           POSTGRES_URL_OVERRIDE = "postgresql://mealie:@/mealie?host=/run/postgresql";
 
